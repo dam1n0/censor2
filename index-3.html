@@ -1,0 +1,2323 @@
+﻿<!DOCTYPE HTML>
+<html data-ng-app='app' lang='fr-CH' prefix='og: http://ogp.me/ns#'>
+<head data-hook='inside_head'>
+<base href='/'>
+<script>
+  window.prerenderAgent = false;
+  
+  /**
+   * A simple utility for tracking non-angular loading benchmarks
+   */
+  window.PageloadTracking = {
+    initialized: false,
+    summarySent: false,
+    summaryInterval: null,
+  
+    viewloadStart: null,
+    
+    initialize: function() {
+      this.initialized = true;
+      this.summarySent = false;
+  
+      if (window.performance && !window.prerenderAgent) {
+        this.summaryInterval = setInterval(function() { window.PageloadTracking.onSummaryInterval() }, 1000)
+      }
+    },
+  
+    onSummaryInterval: function() {
+      // TODO: Send the accumulated data or wait again until it's ready
+      if (!this.summarySent && window.performance && window.performance.timing && window.performance.timing.domComplete) {
+        ahoy.track('firstload-summary', { timing: this.getTotalTime(), loadtime: this.getLoadTime(), domtime: this.getParseTime(), domcomplete: this.getInteractiveToCompleteTime(), channel: window.xSessionChannel, useragent: (window.navigator && window.navigator.userAgent), url: location.pathname + location.search, order_id: window.currentOrderId }, function() {
+          PageloadTracking.summarySent = true;
+        });
+  
+        clearInterval(this.summaryInterval);
+      }
+    },
+  
+    viewloadSummaryStart: function() {
+      if (this.summarySent) { // Ignore views loaded before the firstload summary is sent
+        this.viewloadStart = (new Date()).getTime();
+      }
+    },
+  
+    viewloadSummaryEnd: function() {
+      if (this.viewloadStart != null && !window.prerenderAgent) {
+        try{
+          ahoy.track('viewload-summary', { timing: (new Date()).getTime() - this.viewloadStart, channel: window.xSessionChannel, useragent: (window.navigator && window.navigator.userAgent), url: location.pathname + location.search, order_id: window.currentOrderId });
+          this.viewloadStart = null;
+        } catch(e) {
+          console.warn(e);
+        }
+      }
+    },
+  
+    getLoadTime: function() {
+      if (window.performance.timing && window.performance.timing.domLoading && window.performance.timing.requestStart) {
+        return window.performance.timing.domLoading - window.performance.timing.requestStart
+      } else return null
+    },
+  
+    getParseTime: function() {
+      if (window.performance.timing.domInteractive && window.performance.timing.domInteractive && window.performance.timing.domLoading) {
+        return window.performance.timing.domInteractive - window.performance.timing.domLoading
+      } else return null
+    },
+  
+    getInteractiveToCompleteTime: function() {
+      if (window.performance.timing.domInteractive && window.performance.timing.domInteractive && window.performance.timing.domLoading) {
+        return window.performance.timing.domComplete - window.performance.timing.domInteractive
+      } else return null
+    },
+  
+    getTotalTime: function() {
+    if (window.performance.timing && window.performance.timing.domComplete && window.performance.timing.requestStart) {
+        return window.performance.timing.domComplete - window.performance.timing.requestStart
+      } else return null
+    }
+  };
+  
+  try {
+    window.PageloadTracking.initialize();
+  } catch(e) {
+    console.warn(e);
+  }
+</script>
+
+<script>
+  var benchmarkTimerStart = new Date();
+</script>
+<meta charset='utf-8'>
+<title>Commandez des aliments frais sur votre marché en ligne</title>
+<meta content='text/html; charset=UTF-8' http-equiv='Content-Type'>
+<meta content='width=device-width, initial-scale=1.000001, maximum-scale=1.000001, minimum-scale=1.000001, user-scalable=no' name='viewport'>
+<meta content='E9AA77129348D4CEE034697686871E54' name='msvalidate.01'>
+<!-- /%meta(name="apple-mobile-web-app-capable" content="yes") -->
+<!-- /%meta(name="apple-mobile-web-app-status-bar-style" content="white") -->
+
+
+<meta name="description" content="fresh-torino.xyz propose, pour des courses hebdomadaires en toute transparence, plus de 10.000 produits choisit soigneusement par plus de 900 producteurs authentiques.">
+
+<meta property="og:locale" content="fr_CH">
+<meta property="og:url" content="https://www.fresh-torino.xyz/?locale=fr-CH">
+<meta property="og:title" content="Commandez des aliments frais sur votre marché en ligne">
+<meta property="og:description" content="fresh-torino.xyz propose, pour des courses hebdomadaires en toute transparence, plus de 10.000 produits choisit soigneusement par plus de 900 producteurs authentiques.">
+
+<meta property="og:image" content="https://d23qaq2ahooeph.cloudfront.net/assets/social_covers/fr-CH/farmy_social_cover_3-c1a9636afbea3f3bb45b976a01e419ebc9be5e3a5b27b630c8c8741352d251f2.jpg">
+
+<meta name="csrf-token" content="9HB0iNIyj6nMN+YqesQeMEhfqHiOp3ovNPl8PE2dRLpeLpAXEHPyXAZbwO8UswAo7tRwjXqQnMfJOCL9a8LayE9vmy61o07dhibouSBtGbLzcmwLEE79+g==">
+<link rel="alternate" hreflang="en" href="en.html">
+<link rel="alternate" hreflang="x-default" href="index.htm">
+<link rel="alternate" hreflang="fr-CH" href="fr-CH.html">
+<script>
+  WebFontConfig = {
+    google: { families: [ 'Droid+Sans:400,700:latin', 'Roboto+Slab:400,300,700:latin' ] }
+  };
+  (function() {
+    var wf = document.createElement('script');
+    wf.src = 'https://ajax.googleapis.com/ajax/libs/webfont/1/webfont.js';
+    wf.type = 'text/javascript';
+    wf.async = 'true';
+    var s = document.getElementsByTagName('script')[0];
+    s.parentNode.insertBefore(wf, s);
+  })();
+</script>
+<link href='favicons\apple-icon-57x57.png?5' rel='apple-touch-icon' sizes='57x57'>
+<link href='favicons\apple-icon-60x60.png?5' rel='apple-touch-icon' sizes='60x60'>
+<link href='favicons\apple-icon-72x72.png?5' rel='apple-touch-icon' sizes='72x72'>
+<link href='favicons\apple-icon-76x76.png?5' rel='apple-touch-icon' sizes='76x76'>
+<link href='favicons\apple-icon-114x114.png?5' rel='apple-touch-icon' sizes='114x114'>
+<link href='favicons\apple-icon-120x120.png?5' rel='apple-touch-icon' sizes='120x120'>
+<link href='favicons\apple-icon-144x144.png?5' rel='apple-touch-icon' sizes='144x144'>
+<link href='favicons\apple-icon-152x152.png?5' rel='apple-touch-icon' sizes='152x152'>
+<link href='favicons\apple-icon-180x180.png?5' rel='apple-touch-icon' sizes='180x180'>
+<link href='favicons\android-icon-192x192.png?5' rel='icon' sizes='192x192' type='image/png'>
+<link href='favicons\favicon-32x32.png?5' rel='icon' sizes='32x32' type='image/png'>
+<link href='favicons\favicon-96x96.png?5' rel='icon' sizes='96x96' type='image/png'>
+<link href='favicons\favicon-16x16.png?5' rel='icon' sizes='16x16' type='image/png'>
+<link href='favicons\manifest.json' rel='manifest'>
+<meta content='#ffffff' name='msapplication-TileColor'>
+<meta content='/favicons/ms-icon-144x144.png?5' name='msapplication-TileImage'>
+<meta content='#ffffff' name='theme-color'>
+
+<link rel="stylesheet" media="screen" href="https://d23qaq2ahooeph.cloudfront.net/assets/spree/frontend/all-9d3c28101a5d3aa30c57a0110629e95bb868aa77d7a591e727ef598731fd7bf9.css" crossorigin="anonymous">
+<link rel="stylesheet" media="screen" href="https://d23qaq2ahooeph.cloudfront.net/assets/spree/ng-frontend/ng-frontend-a966f79a0496b03b1e241f7eba7a93c1dd6c6107c64c139c3844e9fce0c2f5c7.css" crossorigin="anonymous">
+<script src="https://d23qaq2ahooeph.cloudfront.net/assets/vendor/jquery/jquery-92be23a63b104bb2138c9d8086d283f960e550bd8911ce672f3179f4650bc67a.js" crossorigin="anonymous"></script>
+<script src='https://js.pusher.com/4.3/pusher.min.js'></script>
+<script>
+  $(document).ready(function() {
+    console.log("Time until DOMready: ", (Date.now() - benchmarkTimerStart).toString() + 'ms');
+  });
+  
+  $(window).load(function() {
+    console.log("Time until everything loaded: ", (Date.now() - benchmarkTimerStart).toString() + 'ms');
+  });
+</script>
+
+<!--[if lte IE 9]>
+<link rel="stylesheet" media="screen" href="https://d23qaq2ahooeph.cloudfront.net/assets/spree/frontend/ie-style-head-a8c495bcb9fcb3af66d3ac95572cd1e22c4ca645f1628df77aaf916fe129dfed.css" />
+<link rel="stylesheet" media="screen" href="https://d23qaq2ahooeph.cloudfront.net/assets/spree/frontend/ie9-e42e4bbdf2f68e19f45c95203479ce5eb802d4e79e76ea2d96b042a01bc37423.css" />
+<![endif]-->
+<style>
+  .admin-tool {
+    display: none
+  }
+</style>
+<google-structured-data></google-structured-data>
+
+<style>
+  page-content-main.page-content.with-cart-sidebar {
+    display: inline-block; }
+</style>
+
+<script src="https://d23qaq2ahooeph.cloudfront.net/assets/spree/frontend/all-728083310473d1baffa77f71c7019199f99c93f03bd2e3dd353239672955f234.js"></script>
+<!-- / Serialize user-session data for use in js code -->
+<script>
+  window.prerenderReady = false;
+  $.ajaxSetup({ headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') } });
+  window.spreeUserLoggedIn = false;
+  window.isMobile = false;
+  window.isIE = false;
+  window.isIE9 = window.navigator && window.navigator.userAgent && window.navigator.userAgent.indexOf('MSIE 9.0;') > -1;
+  window.isEdge = false;
+  I18n.defaultLocale = "de";
+  I18n.locale = "fr-CH";
+  I18n.availableLocales = ["en", "de", "fr-CH"];
+  if (!window._templateHeadersCache) window._templateHeadersCache = {};
+  
+  var userLocale = "fr-CH";
+  if (window.navigator && window.navigator.language != null)
+    var userLocale = window.navigator.language.substring(0,2);
+  
+  if (window.Spree == null) window.Spree = {};
+  if (window.Spree.routes == null) window.Spree.routes = {}
+  
+  var currentUserId = 0;
+  var currentOrderId = 8735037;
+  var currentOrderNumber = 'R705817116';
+  var currentOrderToken = 'ebf9c1eb24780a24';
+  var currentUserAgeVerified = false;
+  var currentUserRoles = null;
+  
+  
+  
+  var currentHubId = 1;
+  var currentHubName = 'Zürich';
+  var currentHubCode = 'zurich';
+  
+  window.currentStorefront = null;
+  window.currentStorefrontSupplier = null;
+  
+  window.xSessionChannel = 'desktop';
+  window.sessioncookiename = 'farmych';
+  window.sessioncookiettl = 8 * 3600 * 24; // seconds
+  
+  window.prerenderAgent = false;
+  
+  var currentZipcode = null;
+  var currentZipcodeInHubZone = false;
+  var currentZoneRegional = false;
+  
+  var currentUserHubId = null;
+  var currentUserZipcode = null;
+  var currentSessionZipcode = null;
+  var currentUserCanSeeHubs = true;
+  var currentUserFavoritesIds = [];
+  var currentUserActiveSmartPass = false;
+  
+  var isAutosuggestionOrder = false;
+  var currentSmartPassLevel = null;
+  var currentSmartPassUntilDate = null;
+  var currentUserPurchasingSmartPass = false;
+  var freeDeliveryDateRangeNow = false;
+  var justAddedToCartProductId = 0;
+  var disableAutoPromotions = false;
+  var doPollCheckoutAllowed = true;
+  var browserMobileDevice = false;
+  var browserTabletDevice = false;
+  var browserMobileDeviceName = 'Generic Browser';
+  var isTouchDevice = browserMobileDevice || browserTabletDevice;
+  var browserIsBot = false;
+  var enableSPA = true;
+  //var enableTurbolinks = true;
+  var enableTurbolinks = window.enableTurbolinks = false;
+  var productPartialMode = 'full';
+  var trackingOptOut = false;
+  var settingsSiteUrl = 'https://www.fresh-torino.xyz';
+  
+  var supplierPortalMode = false;
+  
+  // Taxons info
+  var rootCategoriesTaxonId = 241;
+  var rootCategoriesTaxon = {"id":241,"name":"Marché","meta_title":"Marché","taxonomy_id":9,"meta_description":null,"description":null,"canonical_url":"https://www.fresh-torino.xyz/fr-CH/marche-en-ligne","permalink":"marche-en-ligne","depth":0,"position":0,"seo_url":null};
+  var rootTaxonomyStem = ['/hofladen', '/farm-shop', '/marche-en-ligne'];
+  
+  window.taxonSortMode = 'editorial_best';
+  window.unitsInflectionsPath = '/assets/spree/frontend/units_inflections-5e8ab0e6909e3411925b94208e14889907b5ba1410166ac0ca043afbd241bfee.js';
+  
+  // Session props
+  var productRibbonData = {"1":{"name":"few","long_name":"Few left","updated_at":"2016-08-12T16:19:07+02:00"},"2":{"name":"new","long_name":"New harvest","updated_at":"2016-08-12T16:19:07+02:00"},"3":{"name":"offer-10","long_name":"-10% Offer","updated_at":"2016-08-12T16:19:07+02:00"},"4":{"name":"offer-20","long_name":"-20% Offer","updated_at":"2016-08-12T16:19:07+02:00"},"5":{"name":"offer-30","long_name":"-30% Offer","updated_at":"2016-08-12T16:19:07+02:00"},"6":{"name":"offer-40","long_name":"-40% Offer","updated_at":"2016-08-12T16:19:07+02:00"},"7":{"name":"offer-50","long_name":"-50% Offer","updated_at":"2016-08-12T16:19:07+02:00"},"8":{"name":"special-offer","long_name":"Special offer","updated_at":"2016-08-12T16:19:07+02:00"},"9":{"name":"seasonal","long_name":"Seasonal","updated_at":"2016-08-12T16:19:07+02:00"},"10":{"name":"seasonal-contents","long_name":"Seasonal contents","updated_at":"2016-08-12T16:19:07+02:00"},"11":{"name":"christmas-reserve","long_name":"Christmas Reserve","updated_at":"2016-11-05T11:22:17+01:00"},"12":{"name":"limited-quantity","long_name":"Limited Quantity","updated_at":"2017-03-31T11:56:11+02:00"},"13":{"name":"2x1","long_name":"2 für 1","updated_at":"2017-06-29T18:18:41+02:00"},"14":{"name":"birthday_special","long_name":"Geburtstags-Angebot","updated_at":"2017-07-05T10:20:46+02:00"},"15":{"name":"offer-5","long_name":"-5% Offer","updated_at":"2018-07-10T22:08:02+02:00"},"16":{"name":"offer-15","long_name":"-15% Offer","updated_at":"2018-07-10T22:08:02+02:00"},"17":{"name":"offer-25","long_name":"-25% Offer","updated_at":"2018-07-10T22:08:02+02:00"},"18":{"name":"offer-35","long_name":"-35% Offer","updated_at":"2018-07-10T22:08:02+02:00"},"19":{"name":"offer-45","long_name":"-45% Offer","updated_at":"2018-07-10T22:08:02+02:00"},"20":{"name":"offer-55","long_name":"-55% Offer","updated_at":"2018-07-10T22:08:02+02:00"},"21":{"name":"offer-60","long_name":"-60% Offer","updated_at":"2018-07-10T22:08:02+02:00"},"22":{"name":"offer-65","long_name":"-65% Offer","updated_at":"2018-07-10T22:08:02+02:00"},"23":{"name":"offer-70","long_name":"-70% Offer","updated_at":"2018-07-10T22:08:02+02:00"}}; // product ribbon data cache
+  var lightweightRequested = false;
+  var loaderAnimationPath = 'https://d23qaq2ahooeph.cloudfront.net/assets/loading-animation-lg-02d15d750d580d527e879d8dd062c52d64a642980459a49d17140db20d902033.gif'; // used in blockUi on virtually every page
+  var affixHeaderOffset = 38;
+  
+  var Rails = { env: 'production' };
+  var Rails = { env: 'production' };
+  if (window.Safely) Safely.env = Rails.env;
+</script>
+<script>
+  var currentWeeklyId = null;
+</script>
+<script>
+  window.knownHubs = [{"id":1,"name":"Zürich","description":null,"address":"Buckhauserstrasse 28","zipcode":"8048","city":"Zürich","enabled":true,"code":"zurich","default_locale":"de"},{"id":4,"name":"Lausanne","description":null,"address":"Route des Flumeaux 39","zipcode":"1008","city":"Lausanne","enabled":true,"code":"lausanne","default_locale":"fr-CH"}];
+</script>
+<script>
+  if (window.Settings == null) window.Settings = {};
+  window.Settings.PusherApiKey = "7dd350c5d3f1b8680b59";
+</script>
+<script>
+  // Storefront-dependant styles
+  // ProductItem name fontSizes schema: { minNameLength: fontSize }
+  window.storefrontStyles = {
+    farmy: {
+      productItem: {
+        fontSizes: {
+          full: {
+            // minNameLenght: fontSize
+            70  : 13,
+            55: 15,
+            45: 17,
+            0: 18
+          },
+          other: {
+            // minNameLenght: fontSize
+            65: 12,
+            50: 13,
+            0: 14
+          }
+        }
+      },
+    },
+    jucker: {
+      productItem: {
+        fontSizes: {
+          full: {75: 18, 65: 22, 55: 24, 0: 26},
+          other: {50: 18, 40: 20, 0: 24}
+        }
+      }
+    }
+  };
+</script>
+
+<script src="https://d23qaq2ahooeph.cloudfront.net/packs/ng-frontend-91dc829cfaee94559b00.js"></script>
+<!--[if lt IE 9]>
+<script src="https://d23qaq2ahooeph.cloudfront.net/assets/html5shiv.min-e4031702b53da4a638769bb691b6f3f44f08d0540fdefde39f751809d46706ad.js"></script>
+<script src="https://d23qaq2ahooeph.cloudfront.net/assets/respond.min-8306093ccce666c01dab405fac0d16596a1d1cf38aa0ba919d4831261662cdbb.js"></script>
+<![endif]-->
+<!--[if lte IE 9]>
+<script src="https://d23qaq2ahooeph.cloudfront.net/assets/css3-mediaqueries-a8994623453b8ccf2d6512ffcbbdbc3df7e4ae2b7959716ff34c3fa9cc16af05.js"></script>
+<script src="https://d23qaq2ahooeph.cloudfront.net/assets/spree/frontend/ie9-78b00c220f95f99358af5053323bea43ad0fcc650febfe1ee89a430f13b1a02e.js"></script>
+<![endif]-->
+
+</head>
+<body class='' data-hook='body' id='default' ng-controller='NgFrontendAppCtrl'>
+<!-- End Facebook Pixel Code -->
+<!-- Social and tracking initialization -->
+
+
+<farmy-notifications-dock></farmy-notifications-dock>
+
+<farmy-content-promo-dock></farmy-content-promo-dock>
+<farmy-website-header></farmy-website-header>
+<div autoscroll='true' class='page-content' data-offset='38' data-spy='affix' farmy-ng-view='farmy-ng-view' id='page-content-main' ng-class="{'with-cart-sidebar': enableCartSidebar}">
+</div>
+<farmy-cart-sidebar ng-show='enableCartSidebar'></farmy-cart-sidebar>
+<farmy-website-footer></farmy-website-footer>
+<div class='template-cache'>
+<!--  -->
+<!-- Elements that aren't changed when turbolinks updates the layout -->
+<!--  -->
+<div aria-hidden='true' class='modal fade' id='dietary-preference-dialog' role='dialog'>
+<form>
+<div class='modal-dialog'>
+<div class='modal-content'>
+<div class='modal-header'>
+<div class='well bg-color-brown text-white text-center' style='padding: 10px 10px; margin-top: 10px; font-size: 26px;'>
+Les habitudes alimentaires
+</div>
+</div>
+<div class='modal-body' style='padding-bottom: 0px;'>
+<div class='row'>
+<div class='col-sm-12'>
+<p>Nous votons nos offres en fonction de vos habitudes alimentaires. Veuillez nous communiquer la Diète qui vous correspond </p>
+<div class='form-group awesome-checkbox-group'>
+<div class='checkbox awesome-checkbox'>
+<input type="checkbox" name="lactose_free_preference" id="lactose_free_preference" value="1">
+<label for="lactose_free_preference">sans lactose 
+</label></div>
+<div class='checkbox awesome-checkbox'>
+<input type="checkbox" name="gluten_free_preference" id="gluten_free_preference" value="1">
+<label for="gluten_free_preference">sans gluten
+</label></div>
+<div class='checkbox awesome-checkbox'>
+<input type="checkbox" name="vegetarian_preference" id="vegetarian_preference" value="1">
+<label for="vegetarian_preference">Végétarien 
+</label></div>
+<div class='checkbox awesome-checkbox'>
+<input type="checkbox" name="vegan_preference" id="vegan_preference" value="1">
+<label for="vegan_preference">Vegan
+</label></div>
+<div class='checkbox awesome-checkbox'>
+<input type="checkbox" name="no_preference_preference" id="no_preference_preference" value="1">
+<label for="no_preference_preference">Aucun n'est valable pour moi
+</label></div>
+</div>
+</div>
+</div>
+</div>
+<div class='modal-footer'>
+<a class='btn btn-default btn-lg' data-dismiss='modal'>Retour</a>
+<button class='btn btn-primary btn-lg' type='submit'>Actualiser</button>
+</div>
+</div>
+</div>
+</form>
+</div>
+
+<!-- / Template cache -->
+<script id='/ng/templates/carts/popover.html?locale=fr-CH' type='text/ng-template'>
+<div class='cart-popover-content'>
+<div class='totals'>
+<div class='update'>
+Actuellement <span class="item-count">{{ CartData.itemCount }} produits </span> dans le panier d'une valeur totale de <span class="cart-total">CHF {{ CartData.cart.total + CartData.cart.weight_control_surcharge_total | number:2 }}</span>
+</div>
+</div>
+<div class='actions' ng-hide='CartData.currentWeekly'>
+<a class='btn btn-primary btn-block' ng-click='goToCart()'>Mon panier</a>
+</div>
+</div>
+
+</script>
+<script id='/cart/popover_weekly.html' type='text/ng-template'>
+<div class='cart-popover-content'>
+<!-- Popup gets displayed when user adds an item to the cart -->
+<div class='h4'>l'ABO <span class="weekday">{{ currentWeeklyDay }}</span></div>
+<div class='totals'>
+Actuellement <span class="item-count">{{ CartData.itemCount }} produits </span> dans le panier d'une valeur totale de <span class="cart-total">CHF {{ CartData.cart.total + CartData.cart.weight_control_surcharge_total | number:2 }}</span>
+</div>
+<div class='actions'>
+<a class='btn btn-primary btn-small btn-block' ng-click='goToCart()'>{{day}} clôturer l'ABO </a>
+</div>
+</div>
+
+</script>
+<script id='/ng/templates/products/product_item_list.html?locale=fr-CH' type='text/ng-template'>
+<a class='anchor' name='{{ ::product.permalink }}'></a>
+<div class='item-container products-list-item list-view' ng-attr-data-google-analytics-product='{{ ::product.google_analytics_product }}' ng-class="{'in-cart has-manage-line-item-control-panel': inCart, 'has-add-to-cart-control-panel': !inCart &amp;&amp; hover, 'disabled-sale': product.disabled_sale }" ng-mouseenter='onMouseEnter($event)' ng-mouseleave='onMouseLeave($event)'>
+<a class='product-link' ng-href='{{ ::product.seo_url }}'>
+<div class='col-photo' ng-load='onImageLoaded(this)' ng-style="{ 'background-image': ('url(' + product.image.md + ')') }" ng-title='{{ ::product.name }}'>
+<div class='photo-list'>
+<div class='control-panel manage-line-item' farmy-ng-include="'/ng/templates/products/edit_line_item.html'" ng-if='!portalProduct &amp;&amp; inCart' ng-style='{height: imageHeight}'></div>
+<div class='control-panel add-to-cart' farmy-ng-include="'/ng/templates/products/add_to_cart.html'" ng-if='!portalProduct &amp;&amp; !inCart &amp;&amp; !disabledSale &amp;&amp; hover' ng-style='{height: imageHeight}'></div>
+<div class='control-panel disabled-sale' farmy-ng-include="'/ng/templates/products/disabled_sale.html'" ng-if='!portalProduct &amp;&amp; disabledSale &amp;&amp; hover' ng-style='{height: imageHeight}'></div>
+</div>
+<i class='fa fa-heart favorites-toggle ng-cloak' data-product-id='{{ ::product.id }}' favorites-toggle title='Ajouter aux Favoris'></i>
+<div class='product-ribbon' ng-if='::product.ribbon_data'>
+<img class='::productRibbonData[product.product_ribbon_id].name product-ribbon product-ribbon-{{ }}' ng-src='/ribbons/{{currentStorefront ? currentStorefront + "/" : ""}}{{ ::ribbon_data.name }}_{{ locale }}.png' title='{{ ::ribbon_data.long_name }}'>
+</div>
+<div class='product-frozen-shipping'>
+<img alt='Frozen delivery' ng-if='::product.frozen_shipping' src='https://d23qaq2ahooeph.cloudfront.net/assets/icons/icon-frozen-3cd6aa66ca13a1b808a3b10273803e2104b50201bf0ed657fcfafb177f93956e.png'>
+</div>
+</div>
+<div class='col-info'>
+<div class='item-content-list'>
+<a class='product-url' href='{{ ::product.seo_url }}'>
+<h4 class='item-title item-title-list'>
+{{ ::product.name }}
+</h4>
+</a>
+<div class='clear'></div>
+<div class='item-supplier-list' ng-href='{{ ::product.supplier.seo_url }}'>
+<img ng-src='{{ ::product.supplier.flag_url }}'>
+{{ ::product.supplier.name | characters:25 }}
+</div>
+<div class='quality-logos-list'>
+<img class='::certificate.code quality-logo {{ }}' ng-repeat='certificate in ::product.certificates' ng-src='{{ ::certificate.icon }}' ng-title='{{ ::certificate.name }}'>
+</div>
+<div class='item-price-list'>
+<span class='current' ng-if='product.strikeout_price'>
+<span class='cur-code'>CHF</span>
+{{ ::product.price | number:2 }}
+</span>
+<div class='strikeout-outer' ng-if='product.strikeout_price'>
+<div class='strikeout'>
+{{ ::product.strikeout_price | number:2 }}
+</div>
+<div class='line-through'></div>
+<div class='line-through2'></div>
+</div>
+<span class='cur-code'>CHF</span>
+{{ ::product.price | number:2 }}
+<span ng-show='product.packaging'>
+/
+{{ ::product.packaging }}
+</span>
+</div>
+</div>
+</div>
+</a>
+</div>
+
+</script>
+<script id='/ng/templates/products/product_item_full.html?locale=fr-CH' type='text/ng-template'>
+<a class='anchor' name='{{ ::product.permalink }}'></a>
+<div class='item-container products-list-item full-view' ng-class="{'in-cart has-manage-line-item-control-panel': inCart, 'has-add-to-cart-control-panel': !inCart &amp;&amp; hover, 'disabled-sale': product.disabled_sale }" ng-mouseenter='hover = true' ng-mouseleave='hover = false'>
+<a class='product-link' ng-href='{{ ::product.seo_url }}'>
+<div class='photo'>
+<i class='fa fa-heart favorites-toggle ng-cloak' data-product-id='{{ ::product.id }}' favorites-toggle title='Ajouter aux Favoris'></i>
+<div class='control-panel manage-line-item ng-cloak' ng-if='imageLoadComplete &amp;&amp; inCart' ng-style='{height: imageHeight}'>
+<div farmy-ng-include="'/ng/templates/products/edit_line_item.html'"></div>
+</div>
+<div class='control-panel add-to-cart ng-cloak' ng-if='imageLoadComplete &amp;&amp; available &amp;&amp; product.available_to_add_to_cart &amp;&amp; !inCart &amp;&amp; !disabledSale &amp;&amp; hover' ng-style='{height: imageHeight}'>
+<div farmy-ng-include="'/ng/templates/products/add_to_cart.html'"></div>
+</div>
+<div class='control-panel disabled-sale ng-cloak' ng-if='imageLoadComplete &amp;&amp; (!available || disabledSale || !product.available_to_add_to_cart) &amp;&amp; hover' ng-style='{height: imageHeight}'>
+<div farmy-ng-include="'/ng/templates/products/disabled_sale.html'"></div>
+</div>
+<img class='img-responsive' fallbackonerror='/stubs/product-catalog.jpg?3' imageonload='onImageLoaded(this)' ng-src-delayed='product.image.md' ng-title='{{ ::product.name }}' src='/stubs/product-catalog.jpg?3'>
+</div>
+<div class='quality-logos'>
+<img class='::certificate.code quality-logo {{ }}' ng-repeat='certificate in ::product.certificates' ng-src='{{ ::certificate.icon }}' ng-title='{{ ::certificate.name }}'>
+</div>
+<div class='product-ribbon' ng-if='::product.ribbon_data'>
+<img class='product-ribbon' ng-class="'product-ribbon-' + product.ribbon_data.name" ng-src='{{::"/ribbons/" + (currentStorefront ? currentStorefront + "/" : "") + product.ribbon_data.name + "_" + locale + ".png"}}' title='{{:: product.ribbon_data.long_name }}'>
+</div>
+<div class='product-frozen-shipping'>
+<img alt='Frozen delivery' ng-if='::product.frozen_shipping' src='https://d23qaq2ahooeph.cloudfront.net/assets/icons/icon-frozen-3cd6aa66ca13a1b808a3b10273803e2104b50201bf0ed657fcfafb177f93956e.png'>
+</div>
+</a>
+<div class='item-content'>
+<a class='product-url' href='{{ ::product.seo_url }}'>
+<h4 class='item-title {{::cssNameClass}}'>
+{{ ::product.name }}
+</h4>
+</a>
+<div class='clear'></div>
+<div class='item-supplier {{::cssSupplierClass}}' ng-href='{{ ::product.supplier.seo_url }}'>
+<img ng-src='{{ ::product.supplier.flag_url }}'>
+{{ ::product.supplier.name }}
+</div>
+<div class='item-price'>
+<div class='current-price'>
+<span class='cur-code'>CHF</span>
+{{ ::product.price | number:2 }}
+<div class='strikeout-outer' ng-if='product.strikeout_price'>
+<div class='strikeout'>
+{{ ::product.strikeout_price | number:2 }}
+</div>
+</div>
+<span ng-show='::product.packaging'>
+/
+{{ ::product.packaging }}
+</span>
+</div>
+</div>
+</div>
+</div>
+
+</script>
+<script id='/modal_loading_indicator.html' type='text/ng-template'>
+<div class='modal-loading-indicator'>
+<img class='loader' src='https://d23qaq2ahooeph.cloudfront.net/assets/tractor-animated-43f13d72c52f2bad86a16c4656cf8e942897726b19569da28317ef2873bbc5b1.gif'>
+<div class='text-center text-primary small'>
+Chargement
+</div>
+</div>
+</script>
+<script id='/ng/templates/products/product_item_full.html?locale=fr-CH' type='text/ng-template'>
+<a class='anchor' name='{{ ::product.permalink }}'></a>
+<div class='item-container products-list-item full-view' ng-class="{'in-cart has-manage-line-item-control-panel': inCart, 'has-add-to-cart-control-panel': !inCart &amp;&amp; hover, 'disabled-sale': product.disabled_sale }" ng-mouseenter='hover = true' ng-mouseleave='hover = false'>
+<a class='product-link' ng-href='{{ ::product.seo_url }}'>
+<div class='photo'>
+<i class='fa fa-heart favorites-toggle ng-cloak' data-product-id='{{ ::product.id }}' favorites-toggle title='Ajouter aux Favoris'></i>
+<div class='control-panel manage-line-item ng-cloak' ng-if='imageLoadComplete &amp;&amp; inCart' ng-style='{height: imageHeight}'>
+<div farmy-ng-include="'/ng/templates/products/edit_line_item.html'"></div>
+</div>
+<div class='control-panel add-to-cart ng-cloak' ng-if='imageLoadComplete &amp;&amp; available &amp;&amp; product.available_to_add_to_cart &amp;&amp; !inCart &amp;&amp; !disabledSale &amp;&amp; hover' ng-style='{height: imageHeight}'>
+<div farmy-ng-include="'/ng/templates/products/add_to_cart.html'"></div>
+</div>
+<div class='control-panel disabled-sale ng-cloak' ng-if='imageLoadComplete &amp;&amp; (!available || disabledSale || !product.available_to_add_to_cart) &amp;&amp; hover' ng-style='{height: imageHeight}'>
+<div farmy-ng-include="'/ng/templates/products/disabled_sale.html'"></div>
+</div>
+<img class='img-responsive' fallbackonerror='/stubs/product-catalog.jpg?3' imageonload='onImageLoaded(this)' ng-src-delayed='product.image.md' ng-title='{{ ::product.name }}' src='/stubs/product-catalog.jpg?3'>
+</div>
+<div class='quality-logos'>
+<img class='::certificate.code quality-logo {{ }}' ng-repeat='certificate in ::product.certificates' ng-src='{{ ::certificate.icon }}' ng-title='{{ ::certificate.name }}'>
+</div>
+<div class='product-ribbon' ng-if='::product.ribbon_data'>
+<img class='product-ribbon' ng-class="'product-ribbon-' + product.ribbon_data.name" ng-src='{{::"/ribbons/" + (currentStorefront ? currentStorefront + "/" : "") + product.ribbon_data.name + "_" + locale + ".png"}}' title='{{:: product.ribbon_data.long_name }}'>
+</div>
+<div class='product-frozen-shipping'>
+<img alt='Frozen delivery' ng-if='::product.frozen_shipping' src='https://d23qaq2ahooeph.cloudfront.net/assets/icons/icon-frozen-3cd6aa66ca13a1b808a3b10273803e2104b50201bf0ed657fcfafb177f93956e.png'>
+</div>
+</a>
+<div class='item-content'>
+<a class='product-url' href='{{ ::product.seo_url }}'>
+<h4 class='item-title {{::cssNameClass}}'>
+{{ ::product.name }}
+</h4>
+</a>
+<div class='clear'></div>
+<div class='item-supplier {{::cssSupplierClass}}' ng-href='{{ ::product.supplier.seo_url }}'>
+<img ng-src='{{ ::product.supplier.flag_url }}'>
+{{ ::product.supplier.name }}
+</div>
+<div class='item-price'>
+<div class='current-price'>
+<span class='cur-code'>CHF</span>
+{{ ::product.price | number:2 }}
+<div class='strikeout-outer' ng-if='product.strikeout_price'>
+<div class='strikeout'>
+{{ ::product.strikeout_price | number:2 }}
+</div>
+</div>
+<span ng-show='::product.packaging'>
+/
+{{ ::product.packaging }}
+</span>
+</div>
+</div>
+</div>
+</div>
+
+</script>
+<script id='/ng/templates/hubs/zipcode_modal.html' type='text/ng-template'>
+<link rel="stylesheet" media="screen" href="https://d23qaq2ahooeph.cloudfront.net/assets/spree/frontend/campaigns/zipcode_modal-5b6ed20bec217c10995e7256d4de143d504d35ca71cdd854c80c10ba816d4310.css" />
+<div class='modal-body text-center' style='padding-bottom: 10px'>
+<div class='row'>
+<div class='col-xs-12 heading'>
+<h1>{{ 'zipcode_modal.title' | translate }}</h1>
+<p>{{ 'zipcode_modal.subtitle' | translate }}</p>
+</div>
+</div>
+<div class='row'>
+<div class='col-xs-12'>
+<div class='text-center marginbottomgw margintopgw'>
+<div class='btn-group language-selector'>
+<button class='btn btn-sm btn-default' ng-class="{'btn-primary': preferredLocale == 'de'}" ng-click='setPreferredLocale("de")'>Deutsch</button>
+<button class='btn btn-sm btn-default' ng-class="{'btn-primary': preferredLocale == 'fr-CH'}" ng-click='setPreferredLocale("fr-CH")'>Français</button>
+<button class='btn btn-sm btn-default' ng-class="{'btn-primary': preferredLocale == 'en'}" ng-click='setPreferredLocale("en")'>English</button>
+</div>
+</div>
+</div>
+</div>
+<div class='row'>
+<div class='col-xs-12 marginbottomgw'>
+<form>
+<div class='form-group col-sm-6 col-sm-offset-3 col-xs-12' style='margin-bottom: 0'>
+<div class='margintophgw hidden-xs'></div>
+<div class='zipcode-input ng-cloak'>
+<div class='warning-sign'>
+<div class='fa fa-attention-circled text-danger' ng-hide='isZipcodeValid || inputPristine || isChecking'></div>
+</div>
+<div class='loading-icon' ng-show='loadingLocation || isChecking'>
+<div class='fa fa-spin fa-spin6' style='width: 29px; height: 27px'></div>
+</div>
+<input class='btn-xl form-control text-center input-zipcode' maxlength='4' ng-class="{'placeholder-style': !zipcode || zipcode == ''}" ng-init='focusInput()' ng-keydown='onKeyPressed($event)' ng-keyup='onKeyReleased($event)' ng-model='zipcode' pattern='[0-9]*' placeholder="{{showPlaceholder ? ('zipcode_modal.enter_zipcode_short' | translate) : ''}}" style='height: 56px'>
+</div>
+</div>
+</form>
+<small class='please-enter-notice-wrapper col-sm-8 col-sm-offset-2 col-xs-12' ng-class="{ 'wrapped': isZipcodeValid || inputPristine || isChecking }">
+<div class='please-enter-notice text-danger margintopgw'>
+{{ (incompatibleHubForStorefront ? 'zipcode_modal.unavailable_shipping' : 'zipcode_modal.enter_zipcode') | translate }}
+</div>
+</small>
+<div class='clearfix'></div>
+</div>
+</div>
+<div class='promotions-wrapper ng-cloak' ng-hide='hidePromotions || promoType == null'>
+<div class='promotion-block farmy_plus' ng-class="{'wrapped': promoType != 'farmy_plus' || !isZipcodeValid}">
+<div class='inner-wrapper text-center'>
+<div class='illustration'>
+<img class='ng-cloak' ng-show="preferredLocale == 'de'" src='https://d23qaq2ahooeph.cloudfront.net/assets/farmy_plus/banner_gratis_de-ab584ffc70bf00f9381a73b0167b77f152dbab71b4ec19cdb60a7aef812ed26d.png'>
+<img class='ng-cloak' ng-show="preferredLocale == 'fr-CH'" src='https://d23qaq2ahooeph.cloudfront.net/assets/farmy_plus/banner_gratis_fr-CH-ce010ce0140e8a549cd2f9b8d67dd69e2c0f6f9c6c1faa9806ba5c44910731c0.png'>
+<img class='ng-cloak' ng-show="preferredLocale == 'en'" src='https://d23qaq2ahooeph.cloudfront.net/assets/farmy_plus/banner_gratis_en-96fed4eac92b38a2034476d59512d618cb5a63f69d45332b2a5be98c95387822.png'>
+<div class='block-description text-center'>{{ 'zipcode_modal.shipping_promos.farmy_plus.c02_notice' | translate }}</div>
+</div>
+</div>
+
+</div>
+<div class='promotion-block plain_free' ng-class="{'wrapped': promoType != 'plain_free' || !isZipcodeValid}">
+<div class='inner-wrapper text-center'>
+<div class='illustration'>
+<img class='ng-cloak' ng-show="preferredLocale == 'de'" src='https://d23qaq2ahooeph.cloudfront.net/assets/farmy_plus/banner_gratis_de-ab584ffc70bf00f9381a73b0167b77f152dbab71b4ec19cdb60a7aef812ed26d.png'>
+<img class='ng-cloak' ng-show="preferredLocale == 'fr-CH'" src='https://d23qaq2ahooeph.cloudfront.net/assets/farmy_plus/banner_gratis_fr-CH-ce010ce0140e8a549cd2f9b8d67dd69e2c0f6f9c6c1faa9806ba5c44910731c0.png'>
+<img class='ng-cloak' ng-show="preferredLocale == 'en'" src='https://d23qaq2ahooeph.cloudfront.net/assets/farmy_plus/banner_gratis_en-96fed4eac92b38a2034476d59512d618cb5a63f69d45332b2a5be98c95387822.png'>
+<div class='block-description text-center'>{{ 'zipcode_modal.shipping_promos.plain_free.title' | translate }}</div>
+</div>
+</div>
+
+</div>
+<div class='promotion-block first_two_orders' ng-class="{'wrapped': promoType != 'first_two_orders' || !isZipcodeValid}">
+<div class='inner-wrapper text-center'>
+<div class='illustration'>
+<img class='ng-cloak' ng-show="preferredLocale == 'de'" src='https://d23qaq2ahooeph.cloudfront.net/assets/promotions/first_two_orders/free_delivery_graphic_de-2a7e67d6a2d15f2259232a7d972281b17715e4d4c534fc52e1a228d988f06edf.png'>
+<img class='ng-cloak' ng-show="preferredLocale == 'fr-CH'" src='https://d23qaq2ahooeph.cloudfront.net/assets/promotions/first_two_orders/free_delivery_graphic_fr-CH-131c034811bd9cda1a1f08b071acd804792ae3c01691d2b8eb45711bf912a319.png'>
+<img class='ng-cloak' ng-show="preferredLocale == 'en'" src='https://d23qaq2ahooeph.cloudfront.net/assets/promotions/first_two_orders/free_delivery_graphic_en-be9c1c363f3630e16745a0cbde4c371ea107eeacb6f6fe479cd0e2f0c60d041e.png'>
+<div class='block-description margintophgw text-center'>{{ 'zipcode_modal.shipping_promos.first_two_orders.subtitle' | translate }}</div>
+</div>
+</div>
+
+</div>
+</div>
+</div>
+<div class='modal-footer ng-cloak' ng-init="ctaTextVersion = 'show_products'">
+<div class='row'>
+<div class='col-xs-12 hidden-xs margintopgw'></div>
+<div class='col-xs-12 text-center'>
+<button class='btn btn-primary btn-xl btn-block btn-submit' ng-click='isZipcodeValid &amp;&amp; onSubmitClicked()' ng-disabled='!isZipcodeValid' style='display: inline-block; width: 370px; max-width: 100%'>
+{{ 'zipcode_modal.' + ctaTextVersion | translate }}
+</button>
+<a class='small text-muted pull-right' ng-click='[UserService.showLoginScreen(), dismiss()]' ng-if='!UserService.isLoggedIn' style='margin-top: 20px; cursor: pointer;'>
+<i class='fa fa-user'></i>
+Se connecter
+</a>
+</div>
+<div class='clearfix'></div>
+</div>
+</div>
+
+</script>
+<script id='/ng/templates/farmy_notifications/notifications_dock.html?locale=fr-CH' type='text/ng-template'>
+<style>
+  farmy-notifications-dock {
+    position: static;
+    top: 0;
+    width: 100%;
+    height: 0px;
+    z-index: -1;
+    background-color: transparent;
+    transition: background-color 200ms;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column; }
+    farmy-notifications-dock.modal-mode {
+      background-color: rgba(0, 0, 0, 0.4); }
+    farmy-notifications-dock.modal-mode-active {
+      position: fixed;
+      z-index: 9100;
+      height: 100%; }
+  
+  farmy-notification {
+    position: fixed;
+    width: auto;
+    max-width: 500px;
+    display: none;
+    height: auto;
+    align-items: baseline;
+    justify-items: center;
+    top: 10px;
+    padding: 0 10px;
+    z-index: 9105; }
+    farmy-notification.notification-default {
+      width: 100%;
+      max-width: 100%;
+      top: 0;
+      padding: 0; }
+      farmy-notification.notification-default.notification-visible {
+        display: block; }
+      farmy-notification.notification-default .notification {
+        border-radius: 0;
+        padding: 10px 20px 13px; }
+    farmy-notification.modal-mode {
+      position: relative; }
+    farmy-notification.notification-visible {
+      display: flex; }
+    @media (max-width: 428px) {
+      farmy-notification {
+        top: unset;
+        bottom: 10px;
+        align-items: center; } }
+    farmy-notification.modal-mode {
+      align-items: center; }
+    farmy-notification .notification {
+      margin: -30px auto 0;
+      padding: 17px 20px 20px;
+      background: white;
+      transition: margin 200ms, opacity 200ms;
+      box-shadow: 2px 3px 11px -5px black;
+      border-radius: 13px;
+      opacity: 0; }
+      farmy-notification .notification .notification-info-text {
+        color: #F26F00 !important; }
+      farmy-notification .notification.notification-info-bg {
+        background-color: #F26F00 !important; }
+      farmy-notification .notification .notification-error-text {
+        color: #c60f13 !important; }
+      farmy-notification .notification.notification-error-bg {
+        background-color: #c60f13 !important; }
+      farmy-notification .notification .notification-warn-text {
+        color: #F26F00 !important; }
+      farmy-notification .notification.notification-warn-bg {
+        background-color: #F26F00 !important; }
+      farmy-notification .notification .notification-success-text {
+        color: #459343; }
+      farmy-notification .notification.notification-success-bg {
+        background-color: #459343; }
+      farmy-notification .notification .notification-facebook-text {
+        color: #3c67ad !important; }
+      farmy-notification .notification.notification-facebook-bg {
+        background-color: #3c67ad !important; }
+      @media (max-width: 428px) {
+        farmy-notification .notification {
+          margin: 0 auto -30px; } }
+      farmy-notification .notification.notification-visible {
+        margin: 0 auto;
+        opacity: 1; }
+      farmy-notification .notification.notification-basic .notification-content {
+        display: flex;
+        align-items: center;
+        color: white; }
+        farmy-notification .notification.notification-basic .notification-content .notification-message-wrapper {
+          display: flex;
+          align-items: center; }
+          farmy-notification .notification.notification-basic .notification-content .notification-message-wrapper .notification-icon {
+            font-size: 30px; }
+            farmy-notification .notification.notification-basic .notification-content .notification-message-wrapper .notification-icon.round-badge {
+              font-size: 20px;
+              background: white;
+              padding: 4px 0px 4px 4px;
+              border-radius: 15px;
+              margin-right: 5px; }
+              farmy-notification .notification.notification-basic .notification-content .notification-message-wrapper .notification-icon.round-badge.facebook {
+                padding: 5px 0px 3px 4px; }
+          farmy-notification .notification.notification-basic .notification-content .notification-message-wrapper .notification-message {
+            display: inline-block;
+            padding-left: 8px; }
+            farmy-notification .notification.notification-basic .notification-content .notification-message-wrapper .notification-message.padding-right {
+              padding-right: 30px; }
+            farmy-notification .notification.notification-basic .notification-content .notification-message-wrapper .notification-message a {
+              color: inherit;
+              text-decoration: underline; }
+          farmy-notification .notification.notification-basic .notification-content .notification-message-wrapper .close-icon {
+            font-size: 20px;
+            position: absolute;
+            top: -11px;
+            right: -6px;
+            cursor: pointer; }
+        farmy-notification .notification.notification-basic .notification-content .notification-cta-btn {
+          display: flex;
+          align-items: flex-end;
+          flex-direction: column; }
+          farmy-notification .notification.notification-basic .notification-content .notification-cta-btn .btn {
+            width: 100%;
+            overflow-wrap: break-word;
+            white-space: normal; }
+</style>
+<farmy-notification class='notification-{{notification.style}}' id='notification-{{notification.index}}' ng-class="{'modal-mode': notification.modal}" ng-repeat='notification in notifications' ng-swipe-left='dismiss()' ng-swipe-right='dismiss()' notification='notification'></farmy-notification>
+
+</script>
+<!-- / Cache checkout templates, so that there's no template load delay during interactions -->
+<script id='/ng/templates/farmy_notifications/notification_error.html?locale=fr-CH' type='text/ng-template'>
+<div class='notification notification-basic notification-error-bg'>
+<div class='row notification-content'>
+<div class='col-xs-12 notification-message-wrapper'>
+<i class='fa fa-attention-circled notification-icon'></i>
+<div class='notification-message' ng-bind-html='notification.message' ng-class="{'padding-right': notification.showCloseBtn || notification.timeout == 0}"></div>
+<i class='close-icon no-outline fa fa-times' ng-click='dismiss()' ng-if='!notification.ctaBtn &amp;&amp; (notification.showCloseBtn || notification.timeout == 0)'></i>
+</div>
+</div>
+</div>
+
+</script>
+<script id='/ng/templates/farmy_notifications/notification_facebook.html?locale=fr-CH' type='text/ng-template'>
+<div class='notification notification-basic notification-facebook-bg'>
+<div class='row notification-content'>
+<div class='col-xs-12 notification-message-wrapper'>
+<i class='fa fa-facebook notification-icon round-badge facebook notification-facebook-text'></i>
+<div class='notification-message' ng-bind-html='notification.message' ng-class="{'padding-right': notification.showCloseBtn || notification.timeout == 0}"></div>
+<i class='close-icon no-outline fa fa-times' ng-click='dismiss()' ng-if='!notification.ctaBtn &amp;&amp; (notification.showCloseBtn || notification.timeout == 0)'></i>
+</div>
+</div>
+</div>
+
+</script>
+<script id='/ng/templates/farmy_notifications/notification_en_route.html?locale=fr-CH' type='text/ng-template'>
+<style>
+  .notification.notification-en-route {
+    position: relative;
+    border: 1px solid rgba(0, 0, 0, 0.2); }
+    .notification.notification-en-route .close-icon {
+      font-size: 20px;
+      position: absolute;
+      top: 8px;
+      right: 6px;
+      cursor: pointer;
+      color: rgba(0, 0, 0, 0.2); }
+</style>
+<div class='notification notification-en-route'>
+<div class='text-center padding-sm' style='outline: none'>
+<div class='notification-message' ng-bind-html='notification.message' ng-class="{'padding-right': notification.showCloseBtn || notification.timeout == 0}"></div>
+<a class='btn btn-primary margintophgw' ng-click='dismiss()' ng-href='/orders/{{ notification.contents.order_id }}/positional_tracking' style='color: white; background-color: #f26f00'>
+Outils de localisation de livraison
+</a>
+</div>
+<i class='close-icon no-outline fa fa-times' ng-click='dismiss()' ng-if='!notification.ctaBtn &amp;&amp; (notification.showCloseBtn || notification.timeout == 0)'></i>
+</div>
+
+</script>
+<script id='/ng/templates/farmy_notifications/notification_referral_eggs_earned_referenced.html?locale=fr-CH' type='text/ng-template'>
+<style>
+  .notification.notification-eggs-earned-referenced {
+    position: relative;
+    border: 1px solid rgba(0, 0, 0, 0.2); }
+    .notification.notification-eggs-earned-referenced .close-icon {
+      font-size: 20px;
+      position: absolute;
+      top: 8px;
+      right: 6px;
+      cursor: pointer;
+      color: rgba(0, 0, 0, 0.2); }
+</style>
+<div class='notification notification-eggs-earned-referenced'>
+<div class='text-center padding-sm' style='outline: none'>
+<img class='paddingbottom15' src='/rewards/francs_for_eggs.png'>
+<h3 class='text-primary'>
+<b>Vous avez gagné {{ notification.contents.eggs_earned }} œufs de bonus.</b>
+</h3>
+<p>
+Grâce à {{ notification.contents.sender_name }} vous avez maintenant un total de<br /><b>{{ notification.contents.eggs_total }} œufs bonus</b>
+</p>
+<a class='btn btn-primary' href='/account?selected=loyalty_program' ng-click='dismiss()' style='color: white; background-color: #f26f00'>
+Mon compte client
+</a>
+</div>
+</div>
+
+</script>
+<script id='/ng/templates/farmy_notifications/notification_info.html?locale=fr-CH' type='text/ng-template'>
+<div class='notification notification-basic notification-info-bg'>
+<div class='row notification-content'>
+<div class='col-xs-12 notification-message-wrapper'>
+<i class='fa fa-info-circled notification-icon'></i>
+<div class='notification-message' ng-bind-html='notification.message' ng-class="{'padding-right': notification.showCloseBtn || notification.timeout == 0}"></div>
+<i class='close-icon no-outline fa fa-times' ng-click='dismiss()' ng-if='!notification.ctaBtn &amp;&amp; (notification.showCloseBtn || notification.timeout == 0)'></i>
+</div>
+</div>
+</div>
+
+</script>
+<script id='/ng/templates/farmy_notifications/notification_free_product_promotion.html?locale=fr-CH' type='text/ng-template'>
+<style>
+  .notification.notification-line-item-added {
+    padding: 4px;
+    max-width: 400px;
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    position: relative; }
+    .notification.notification-line-item-added .notification-header {
+      margin: -1px;
+      padding: 20px;
+      background-color: #f26f00;
+      color: white;
+      font-weight: 900;
+      border-radius: 9px 9px 0 0;
+      line-height: 1.3em;
+      font-size: 22px; }
+    .notification.notification-line-item-added .notification-product .image-wrapper {
+      margin: -1px;
+      max-height: 230px;
+      overflow: hidden;
+      display: flex;
+      align-items: center; }
+      .notification.notification-line-item-added .notification-product .image-wrapper img {
+        width: 100%; }
+    .notification.notification-line-item-added .notification-product .product-title {
+      padding: 11px 20px 13px;
+      margin-bottom: 0;
+      font-size: 23px;
+      line-height: 1.3em; }
+    .notification.notification-line-item-added .notification-footer {
+      padding: 12px 5px 8px;
+      border-top: 1px solid #ddd;
+      font-size: 13px;
+      color: #999;
+      display: flex;
+      justify-content: space-between; }
+      .notification.notification-line-item-added .notification-footer img {
+        height: 17px;
+        margin-top: -4px; }
+    .notification.notification-line-item-added .close-icon {
+      font-size: 20px;
+      position: absolute;
+      top: 9px;
+      right: 7px;
+      cursor: pointer;
+      color: rgba(255, 255, 255, 0.5); }
+</style>
+<div class='notification notification-line-item-added'>
+<h2 class='text-center notification-header'>
+Recevez gratuitement 1kg de délicieuses pommes lors de votre prochaine commande!
+</h2>
+<div class='notification-product'>
+<div class='image-wrapper'>
+<img ng-src='{{ notification.contents.image_url }}'>
+</div>
+<h4 class='text-center product-title'>
+<b>{{ notification.contents.product_name }}</b>
+</h4>
+</div>
+<div class='notification-footer'>
+<div class='footer-left'>
+<img ng-src='{{ notification.contents.region_flag_tag }}'>
+<span style='margin-left: 5px'>{{ notification.contents.supplier }}</span>
+</div>
+<div class='footer-right'>
+<b>{{ notification.contents.quantity_label }}</b>
+</div>
+</div>
+<i class='close-icon no-outline fa fa-times' ng-click='dismiss()' ng-if='!notification.ctaBtn &amp;&amp; (notification.showCloseBtn || notification.timeout == 0)'></i>
+</div>
+
+</script>
+<script id='/ng/templates/farmy_notifications/notification_referral_eggs_earned_sender.html?locale=fr-CH' type='text/ng-template'>
+<style>
+  .notification.notification-eggs-earned-sender {
+    position: relative;
+    border: 1px solid rgba(0, 0, 0, 0.2); }
+    .notification.notification-eggs-earned-sender .close-icon {
+      font-size: 20px;
+      position: absolute;
+      top: 8px;
+      right: 6px;
+      cursor: pointer;
+      color: rgba(0, 0, 0, 0.2); }
+</style>
+<div class='notification notification-eggs-earned-sender'>
+<div class='text-center padding-sm' style='outline: none'>
+<img class='paddingbottom15' src='/rewards/francs_for_eggs.png'>
+<h3 class='text-primary'>
+<b>Un ami que vous avez invité à rejoindre Farmy a passé une commande !</b>
+</h3>
+<p>
+<b>Vous avez gagné {{ notification.contents.eggs_earned }} œufs de bonus.</b>
+Grâce à {{ notification.contents.order_author }} vous avez maintenant un total de<br /><b>{{ notification.contents.eggs_total }} œufs bonus</b>
+</p>
+<a class='btn btn-primary' href='/account?selected=loyalty_program' ng-click='dismiss()' style='color: white; background-color: #f26f00'>
+Mon compte client
+</a>
+</div>
+</div>
+
+</script>
+<script id='/ng/templates/farmy_notifications/notification_success.html?locale=fr-CH' type='text/ng-template'>
+<div class='notification notification-basic notification-success-bg'>
+<div class='row notification-content'>
+<div class='col-xs-12 notification-message-wrapper'>
+<i class='fa fa-ok notification-icon round-badge notification-success-text'></i>
+<div class='notification-message' ng-bind-html='notification.message' ng-class="{'padding-right': notification.showCloseBtn || notification.timeout == 0}"></div>
+<i class='close-icon no-outline fa fa-times' ng-click='dismiss()' ng-if='!notification.ctaBtn &amp;&amp; (notification.showCloseBtn || notification.timeout == 0)'></i>
+</div>
+</div>
+</div>
+
+</script>
+<script id='/ng/templates/farmy_notifications/notification_warn.html?locale=fr-CH' type='text/ng-template'>
+<div class='notification notification-basic notification-warn-bg'>
+<div class='row notification-content'>
+<div class='col-xs-12 notification-message-wrapper'>
+<i class='fa fa-attention-circled notification-icon'></i>
+<div class='notification-message' ng-bind-html='notification.message' ng-class="{'padding-right': notification.showCloseBtn || notification.timeout == 0}"></div>
+<i class='close-icon no-outline fa fa-times' ng-click='dismiss()' ng-if='!notification.ctaBtn &amp;&amp; (notification.showCloseBtn || notification.timeout == 0)'></i>
+</div>
+</div>
+</div>
+
+</script>
+<script id='/ng/templates/farmy_notifications/notification_eggs_earned.html?locale=fr-CH' type='text/ng-template'>
+<style>
+  .notification.notification-eggs-earned {
+    position: relative;
+    border: 1px solid rgba(0, 0, 0, 0.2); }
+    .notification.notification-eggs-earned .close-icon {
+      font-size: 20px;
+      position: absolute;
+      top: 8px;
+      right: 6px;
+      cursor: pointer;
+      color: rgba(0, 0, 0, 0.2); }
+</style>
+<div class='notification notification-eggs-earned'>
+<div class='text-center padding-sm' style='outline: none'>
+<img class='paddingbottom15' src='/rewards/francs_for_eggs.png'>
+<h3 class='text-primary'>
+<b>Vous avez gagné {{ notification.contents.eggs_earned }} œufs de bonus.</b>
+</h3>
+<p>Vous avez dépensé <b>CHF {{ notification.contents.order_total }}</b><br />et maintenant vous avez un total de<br /><b>{{ notification.contents.eggs_total }} œufs de bonus</b></p>
+<a class='btn btn-primary btn-lg' href='/account?selected=loyalty_program' ng-click='dismiss()' style='color: white; background-color: #f26f00'>
+Mon compte client
+</a>
+</div>
+<i class='close-icon no-outline fa fa-times' ng-click='dismiss()' ng-if='!notification.ctaBtn &amp;&amp; (notification.showCloseBtn || notification.timeout == 0)'></i>
+</div>
+
+</script>
+<script id='/ng/templates/farmy_notifications/notification_free_products_pending.html?locale=fr-CH' type='text/ng-template'>
+<style>
+  .notification.notification-line-item-added {
+    padding: 4px;
+    max-width: 400px;
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    position: relative; }
+    .notification.notification-line-item-added .notification-header {
+      margin: -1px;
+      padding: 20px;
+      background-color: #f26f00;
+      color: white;
+      font-weight: 900;
+      border-radius: 9px 9px 0 0;
+      line-height: 1.3em;
+      font-size: 22px; }
+    .notification.notification-line-item-added .notification-product .image-wrapper {
+      margin: -1px;
+      max-height: 230px;
+      overflow: hidden;
+      display: flex;
+      align-items: center; }
+      .notification.notification-line-item-added .notification-product .image-wrapper img {
+        width: 100%; }
+    .notification.notification-line-item-added .notification-product .product-title {
+      padding: 11px 20px 13px;
+      margin-bottom: 0;
+      font-size: 23px;
+      line-height: 1.3em; }
+    .notification.notification-line-item-added .notification-footer {
+      padding: 12px 5px 8px;
+      border-top: 1px solid #ddd;
+      font-size: 13px;
+      color: #999;
+      display: flex;
+      justify-content: space-between; }
+      .notification.notification-line-item-added .notification-footer img {
+        height: 17px;
+        margin-top: -4px; }
+    .notification.notification-line-item-added .close-icon {
+      font-size: 20px;
+      position: absolute;
+      top: 9px;
+      right: 7px;
+      cursor: pointer;
+      color: rgba(255, 255, 255, 0.5); }
+</style>
+<div class='notification notification-line-item-added notification-free-products-pending'>
+<h2 class='text-center notification-header'>
+Félicitations ! Votre prochaine commande contiendra l'un de ces articles en cadeau OFFERT. Dépêchez-vous, l'offre est limitée !
+</h2>
+<div class='possible-products margintophgw'>
+<div class='row'>
+<farmy-product-list column-classes='col-xs-6 col-sm-3 col-md-2' debounce-load='300' layout='tiny' product-ids='{{notification.contents.possible_product_ids_joined}}' products='[]'></farmy-product-list>
+</div>
+</div>
+<i class='close-icon no-outline fa fa-times' ng-click='dismiss()' ng-if='!notification.ctaBtn &amp;&amp; (notification.showCloseBtn || notification.timeout == 0)'></i>
+</div>
+
+</script>
+<script id='/ng/templates/farmy_notifications/notification_default.html?locale=fr-CH' type='text/ng-template'>
+<div class='notification notification-default-bg' ng-init='notification.showCloseBtn = false; notification.ctaBtn = null'>
+<div class='row notification-content'>
+<div class='col-xs-12 notification-message-wrapper text-center'>
+<div class='notification-message' ng-bind-html='notification.message' ng-class="{'padding-right': notification.showCloseBtn || notification.timeout == 0}"></div>
+<i class='close-icon no-outline fa fa-times' ng-click='dismiss()' ng-if='!notification.ctaBtn &amp;&amp; notification.showCloseBtn'></i>
+</div>
+</div>
+</div>
+
+</script>
+<script id='/ng/templates/farmy_notifications/notification_added_line_item_promotion.html?locale=fr-CH' type='text/ng-template'>
+<style>
+  .notification.notification-line-item-added {
+    padding: 4px;
+    max-width: 400px;
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    position: relative; }
+    .notification.notification-line-item-added .notification-header {
+      margin: -1px;
+      padding: 20px;
+      background-color: #f26f00;
+      color: white;
+      font-weight: 900;
+      border-radius: 9px 9px 0 0;
+      line-height: 1.3em;
+      font-size: 22px; }
+    .notification.notification-line-item-added .notification-product .image-wrapper {
+      margin: -1px;
+      max-height: 230px;
+      overflow: hidden;
+      display: flex;
+      align-items: center; }
+      .notification.notification-line-item-added .notification-product .image-wrapper img {
+        width: 100%; }
+    .notification.notification-line-item-added .notification-product .product-title {
+      padding: 11px 20px 13px;
+      margin-bottom: 0;
+      font-size: 23px;
+      line-height: 1.3em; }
+    .notification.notification-line-item-added .notification-footer {
+      padding: 12px 5px 8px;
+      border-top: 1px solid #ddd;
+      font-size: 13px;
+      color: #999;
+      display: flex;
+      justify-content: space-between; }
+    .notification.notification-line-item-added .close-icon {
+      font-size: 20px;
+      position: absolute;
+      top: 9px;
+      right: 7px;
+      cursor: pointer;
+      color: rgba(255, 255, 255, 0.5); }
+</style>
+<div class='notification notification-line-item-added'>
+<h2 class='text-center notification-header'>
+Les produits en action ont été ajoutés avec succès
+</h2>
+<div class='notification-product'>
+<div class='image-wrapper'>
+<img ng-src='{{ notification.contents.image_url }}'>
+</div>
+<h4 class='text-center product-title'>
+<b>{{ notification.contents.product_name }}</b>
+</h4>
+</div>
+<div class='notification-footer'>
+<div class='footer-left'>
+<span ng-bind-html='notification.contents.region_flag_tag'></span>
+<span style='margin-left: 5px'>{{ notification.contents.supplier }}</span>
+</div>
+<div class='footer-right'>
+<b>{{ notification.contents.quantity_label }}</b>
+</div>
+</div>
+<i class='close-icon no-outline fa fa-times' ng-click='dismiss()' ng-if='!notification.ctaBtn &amp;&amp; (notification.showCloseBtn || notification.timeout == 0)'></i>
+</div>
+
+</script>
+<script id='/ng/templates/products/edit_line_item.html?&amp;locale=fr-CH' type='text/ng-template'>
+<div class='backdrop'></div>
+<div class='control-panel-body'>
+<div class='in-cart-label'>
+<div class='quantity'>{{ variantInCartLabel }}</div>
+Dans le panier
+</div>
+<div class='buttons'>
+<button class='btn btn-white pull-left' ng-class="{'btn-remove': variantIndex == 0, 'btn-decrease-amount': variantIndex &gt;= 1}" ng-click='decreaseCartQuantity($event)'>-</button>
+<button class='btn btn-primary btn-increase-amount pull-right' ng-click='increaseCartQuantity($event)' ng-disabled='variantIndex &gt;= variants.length - 1'>+</button>
+</div>
+</div>
+
+</script>
+<script id='/ng/templates/nav/footer.html?&amp;locale=fr-CH' type='text/ng-template'>
+<div class='clearfix'></div>
+<style>
+  footer#page-footer .hotline-label {
+    font-weight: bold;
+    margin-bottom: 8px; }
+  footer#page-footer .whatsapp-link-wrapper {
+    margin-bottom: 1px;
+    margin-left: -2px; }
+  footer#page-footer a.whatsapp-link > img {
+    height: 21px;
+    width: 21px;
+    display: inline-block;
+    margin-top: -3px;
+    margin-left: 0px; }
+  footer#page-footer .footer-logo-wrapper .christmas-padding {
+    padding: 3px 8px 8px; }
+  footer#page-footer .payment-logo {
+    margin-right: 5px;
+    display: inline-block; }
+    footer#page-footer .payment-logo img {
+      height: 50px; }
+</style>
+<!-- page footer -->
+<footer id='page-footer' itemscope itemtype='http://schema.org/Organization'>
+<span class='hidden' itemprop='url'>https://www.fresh-torino.xyz</span>
+<span class='hidden' itemprop='logo'>https://www.fresh-torino.xyz/logo.png</span>
+<div class='container' style='position: relative'>
+<!-- / Absolute positioned footer logo -->
+<a class='footer-logo-wrapper hidden-xs' href='/'>
+<img id='footer-logo' src='https://d23qaq2ahooeph.cloudfront.net/assets/logo-square-header-9c91c73540bca6eeb2864d07a033c60128d152711357645c029a87c35f6aad34.png' title='Farmy'>
+<div class='copyright text-center margintophgw'>
+&copy; 2020
+<span itemprop='name'>fresh-torino.xyz</span>
+</div>
+</a>
+<div class='row'>
+<div class='col-xs-12 col-sm-3 col-md-2 ta-c-xs'>
+<div class='footer-contacts'>
+<div class='hotline-label'>Hotline</div>
+<div class='whatsapp-link-wrapper' ng-if='UserService.hasUnderliveredOrders'>
+<a class='whatsapp-link' href='https://wa.me/41433008660' target='_blank'>
+<img src='https://d23qaq2ahooeph.cloudfront.net/assets/whatsapp_icon-92c86ad0bc70454db1c14f60f8736bb8e3c89a1a7b723bfcf2d977e73d158ab6.png'>
+Whatsapp @ fresh-torino.xyz
+</a>
+</div>
+<span class='phone' itemprop='telephone'>
+<i class='fa fa-phone'></i>
+043 300 86 60
+</span>
+<br>
+<span class='email'>
+<i class='fa fa-envelope'></i>
+<a href='mailto:service@fresh-torino.xyz' itemprop='email'>service@fresh-torino.xyz</a>
+</span>
+<div class='hidden'>
+Adresse
+<br>
+<span class='address' itemprop='address'>Buckhauserstrasse 28, 8048 Zürich</span>
+</div>
+</div>
+</div>
+<div class='col-xs-12 col-sm-3 col-md-3 ta-c ta-l-sm hidden-xs'>
+<nav class='footer-nav'>
+<ul>
+<li>
+<a href='/fr-CH/a-propos-de-nous'>À propos de nous</a>
+</li>
+<li>
+<a href='https://www.fresh-torino.xyz/fr-CH/suppliers'>Nos fermiers et producteurs</a>
+</li>
+<li>
+<a href='/fr-CH/pl' turbolink>Connaissance des produits</a>
+</li>
+<li ng-if='UserService.isLoggedIn'>
+<a href='/en/weeklies' turbolink>Mes abonnements </a>
+</li>
+</ul>
+</nav>
+</div>
+<div class='col-xs-12 col-sm-3 col-md-2 ta-c ta-l-sm'>
+<nav class='footer-nav'>
+<ul>
+<li>
+<a href='/fr-CH/faq' turbolink>Questions fréquentes</a>
+</li>
+<li>
+<a href='/fr-CH/carriere' turbolink>Carrière</a>
+</li>
+<li>
+<a href='/fr-CH/cgv' turbolink>Conditions générales de vente</a>
+</li>
+<li>
+<a href='/fr-CH/cgv#datenschutz' turbolink>Protection des données</a>
+</li>
+<li>
+<a href='/fr-CH/contact' turbolink>Contact</a>
+</li>
+<li class='visible-xs'>
+<a href='/fr-CH/pl' turbolink>Connaissance des produits</a>
+</li>
+<li>
+<a href='/fr-CH/hofpass'>Hofpass</a>
+</li>
+<li>
+<a href='#' id='footer-change-hub' ng-click='openZipcodeModal()'>Changer la région de livraison</a>
+</li>
+</ul>
+</nav>
+</div>
+<div class='visible-xs'>
+<br>
+</div>
+<div class='col-xs-12 col-sm-3 col-md-3 ta-c-xs'>
+<div class='social-links-block'>
+<div class='social-link facebook'>
+<a class='link' href='https://www.facebook.com/fresh-torino.xyz' target='_blank'>
+<i class='fa fa-facebook'></i>
+</a>
+</div>
+<div class='social-link twitter'>
+<a class='link' href='https://twitter.com/farmyCH' target='_blank'>
+<i class='fa fa-twitter'></i>
+</a>
+</div>
+<div class='social-link instagram'>
+<a class='link' href='https://instagram.com/farmy_ch/' target='_blank'>
+<i class='fa fa-instagram'></i>
+</a>
+</div>
+<div class='social-link youtube'>
+<a class='link' href='https://www.youtube.com/channel/UCv6zohUoy1j3XxK2u1MtFWQ' target='_blank'>
+<i class='fa fa-youtube'></i>
+</a>
+</div>
+<div class='clearfix'></div>
+<a href='#' ng-click='openUrl("https://www.trustedshops.ch/bewertung/info_XC41A6F67DA01EF4108CC6FE6DBCE521C.html?utm_source=shop&amp;utm_medium=link&amp;utm_content=TrustmarkCellNo1__trustmark_and_reviews&amp;utm_campaign=trustbadge_maximised")' style='display: block; margin-top: 18px;'>
+<img class='img-responsive marginbottomgw' src='https://d23qaq2ahooeph.cloudfront.net/assets/partners/trust_background_fr-CH-bba881b6788e38426d877aa1058cafc188c8afb13e3f86e5be773e6207ad7fb9.png' style='max-width: 180px; margin-left: auto; margin-right: auto'>
+</a>
+</div>
+</div>
+<div class='col-xs-12 col-sm-6 col-md-2 ta-c-xs'>
+<div class='big-logos pull-right hidden-xs'>
+<a class='ecom-awar' href='http://www.ecommerce-award.ch/award-2016/gewinner-2016/' target='_blank'>
+<img src='https://d23qaq2ahooeph.cloudfront.net/assets/ecommerce-sieger-2016-8dcce9d2057ec0389c48167b7a0204400e854e68f83423df93f8fc9f9d04f4d1.png'>
+</a>
+<a class='ecom-awar' href='http://ecommerce-award.ch/award-2015/gewinner-2015/' target='_blank'>
+<img src='https://d23qaq2ahooeph.cloudfront.net/assets/ecommerce-sieger-2015-84487a1bbf22dbe36978e55f3d2a2e4946855286471fe18fbe608c8613a3eca2.png'>
+</a>
+<img class='swiss-ecom' src='https://d23qaq2ahooeph.cloudfront.net/assets/swiss_ecommerce_association-6c895bc52ecbdc466f7dea74ab9c61a5481985e5dd66794f49a1d3aa2bd740ea.gif'>
+<img class='swiss-ecom' ng-click='openUrl("http://foodwaste.ch/")' src='https://d23qaq2ahooeph.cloudfront.net/assets/foodwaste_badge-5e016f579e87343feb05e9c03d3769f0c8347a01e48283248c231ed106b4a94b.png' style='cursor: pointer'>
+<div id='farmy-trustbadge' style='display: inline-block; margin-top: 13px; opacity: 0'></div>
+</div>
+<div class='big-logos text-center visible-xs'>
+<a class='ecom-awar' href='http://www.ecommerce-award.ch/award-2016/gewinner-2016/' target='_blank'>
+<img src='https://d23qaq2ahooeph.cloudfront.net/assets/ecommerce-sieger-2016-8dcce9d2057ec0389c48167b7a0204400e854e68f83423df93f8fc9f9d04f4d1.png'>
+</a>
+<a class='ecom-awar' href='http://ecommerce-award.ch/award-2015/gewinner-2015/' target='_blank'>
+<img src='https://d23qaq2ahooeph.cloudfront.net/assets/ecommerce-sieger-2015-84487a1bbf22dbe36978e55f3d2a2e4946855286471fe18fbe608c8613a3eca2.png'>
+</a>
+<img class='swiss-ecom' src='https://d23qaq2ahooeph.cloudfront.net/assets/swiss_ecommerce_association-6c895bc52ecbdc466f7dea74ab9c61a5481985e5dd66794f49a1d3aa2bd740ea.gif'>
+</div>
+</div>
+</div>
+<br class='hidden-xs'>
+<div class='row hidden-xs'>
+<div class='col-xs-12 col-sm-3 ta-c-xs'>
+<br>
+</div>
+<div class='col-xs-12 col-sm-9 ta-c-xs payment-logos hidden-xs text-right'>
+<img class='payment-logo' src='https://d23qaq2ahooeph.cloudfront.net/assets/partners/footer_payment_logo_twint-a4986b3f600c41e41dc23b5b530371ca16114d7c56459b32e54c90df55c83e65.png?1574433837' style='height: 40px'>
+<img class='payment-logo' src='https://d23qaq2ahooeph.cloudfront.net/assets/partners/footer_payment_logo_cards-212fc7630acc95143256b86f4e46751b03969c7adf3e5319eb666c539b7f5971.png'>
+<img class='payment-logo' src='https://d23qaq2ahooeph.cloudfront.net/assets/partners/footer_payment_logo_paypal-34af4b90e6d42472ae4ef282a4c60015df1a0adcb313b71f45e4a28f2ed90615.png'>
+<img class='payment-logo' src='https://d23qaq2ahooeph.cloudfront.net/assets/partners/footer_payment_logo_postfinance-44c7d5d82f9e20a8856b3d002dc9388ca7695f0a7f568dd7abcf07151a5220c3.png'>
+<div class='payment-logo'>
+<img src='https://d23qaq2ahooeph.cloudfront.net/assets/partners/footer_payment_rechnung_icon-35bdcd033ec6af88f0d3aa6b89e5a132f328480a14f6d03bebccbcc929463b09.png'>
+<span style='color: white; font-size: 19px; font-weight: 400; margin-left: -9px; margin-right: 6px'></span>
+Facture
+</img>
+</div>
+<img class='payment-logo byjuno' src='https://d23qaq2ahooeph.cloudfront.net/assets/partners/footer_byjuno-734c50868e1800c0f169faebe9a20e37c8d962b61bb9c3432a3be9082117aa9c.png' style='margin-left: 10px'>
+</div>
+</div>
+</div>
+<script>
+  $(window).load(function() {
+    var _tsid = 'XC41A6F67DA01EF4108CC6FE6DBCE521C';
+    _tsConfig = {
+      'yOffset': '0', /* offset from page bottom */
+      'variant': 'custom', /* text, default, small, reviews, custom, custom_reviews */
+      'customElementId': 'farmy-trustbadge', /* required for variants custom and custom_reviews */
+      'customCheckoutElementId': 'ts-checkout-review',
+      'locale': "fr-CH",
+      'trustcardDirection': 'bottomLeft', /* for custom variants: topRight, topLeft, bottomRight, bottomLeft */
+      'customBadgeWidth': '68', /* for custom variants: 40 - 90 (in pixels) */
+      'customBadgeHeight': '68', /* for custom variants: 40 - 90 (in pixels) */
+      'disableResponsive': 'false', /* deactivate responsive behaviour */
+      'disableTrustbadge': 'false', /* deactivate trustbadge */
+      'trustCardTrigger': 'mouseenter' /* set to 'click' if you want the trustcard to be opened on click instead */
+    };
+    var _ts = document.createElement('script');
+    _ts.type = 'text/javascript';
+    _ts.charset = 'utf-8';
+    _ts.async = true;
+    _ts.src = '//widgets.trustedshops.com/js/' + _tsid + '.js';
+    var __ts = document.getElementsByTagName('script')[0];
+    __ts.parentNode.insertBefore(_ts, __ts);
+  });
+</script>
+
+
+
+
+<script id='/ng/templates/nav/header.html?&amp;locale=fr-CH' type='text/ng-template'>
+<header class='container-fluid header-main header_class hidden-xs'>
+<div ng-if='UserService.mode != "weekly"'>
+<style>
+  header .whatsapp-link > img {
+    height: 38px;
+    width: 38px;
+    display: inline-block; }
+</style>
+<div class='container-fluid' id='info-header'>
+<div class='container container-fluidish'>
+<!-- Normal header -->
+<div class='row hidden-xs' ng-class="{'hofpass-padding': SmartPassService.hasActiveSubscription || SmartPassService.purchasing}">
+<div class='col col-sm-12 content-wrapper justify-between'>
+<!-- Without whatsapp -->
+<div class='alpha-col' ng-if='!UserService.hasUnderliveredOrders' style='font-weight: normal'>
+<i class='fa fa-phone'></i>
+&nbsp;
+&nbsp;
+043 300 86 60
+<div class='header-referral-promo'>
+<a href="{{ UserService.isLoggedIn ? '/account?selected=referral_invitations' : '/signup'}}" style='margin-left: 20px; font-weight: 900'>
+<img src='https://d23qaq2ahooeph.cloudfront.net/assets/referrals/header_banner/friends_referral_fr-CH_white-587b85e8d9de0fe8035b0230004b0d7416ff4f1502e013711ed87fbb01a1c102.png'>
+</a>
+</div>
+</div>
+<!-- With whatsapp -->
+<div class='alpha-col whatsapp-button' ng-if='UserService.hasUnderliveredOrders' style='font-weight: normal'>
+<a class='whatsapp-link' href='https://wa.me/41433008660' target='_blank'>
+<img src='https://d23qaq2ahooeph.cloudfront.net/assets/whatsapp_badge-c7deb9cbc17c72bb825cc3d9f8a569e7215ff4c6897ec9b6e526c663e8a1edfd.png' tooltip-placement='bottom' uib-tooltip='Des questions?'>
+&nbsp;
+&nbsp;
+043 300 86 60
+</a>
+<div class='header-referral-promo'>
+<a href="{{ UserService.isLoggedIn ? '/account?selected=referral_invitations' : '/signup'}}" style='margin-left: 20px; font-weight: 900'>
+<img src='https://d23qaq2ahooeph.cloudfront.net/assets/referrals/header_banner/friends_referral_fr-CH_white-587b85e8d9de0fe8035b0230004b0d7416ff4f1502e013711ed87fbb01a1c102.png'>
+</a>
+</div>
+</div>
+<div class='hidden-sm hidden-xs'>
+<div class='content-wrapper justify-right'>
+<!-- / First column -- Display next delivery calendar in all cases. -->
+<div class='hidden-md marginright15'>
+<div class='no-outline ng-cloak' id='top-header-nearest-delivery' ng-click='$root.openDeliveryCalendar()'>
+<i class='fa fa-clock' style='font-size: 150%; margin-top: -2px;'></i>
+<span>{{ PromotionsService.currentPromotion.marketing_zone == 'C' ? 'info_header.delivery_after_tomorrow' : 'info_header.velo' | translate }}</span>
+</div>
+</div>
+<!-- / Second column -->
+<div class='free-shipping-wrapper' ng-show='PromotionsService.currentPromotion'>
+<div class='free-shipping-block' ng-class="SmartPassService.hasActiveSubscription ? 'hofpass' : PromotionsService.currentPromotion.promo_type">
+<div class='zone-block' ng-show='PromotionsService.currentPromotion.marketing_zone'>
+<b style='font-size: 15px'>{{ PromotionsService.currentPromotion.marketing_zone }}</b>
+<br>
+<span style='font-weight: 100'>{{ 'zone' | translate }}</span>
+</div>
+<img class='sprite sprite-bike' ng-show='!SmartPassService.hasActiveSubscription' ng-src='{{ PromotionsService.currentPromotion.sprite }}'>
+<span class='free-shipping-text'>
+<span ng-show='SmartPassService.hasActiveSubscription || PromotionsService.hasPromo'>
+{{ SmartPassService.hasActiveSubscription ? 'info_header.free_delivery.hofpass.message' : 'info_header.free_delivery.' + PromotionsService.currentPromotion.promo_type + '.message' | translate }}
+</span>
+<span ng-show='PromotionsService.hasPromo &amp;&amp; PromotionsService.currentPromotion.no_minimum_value'>
+&nbsp;& {{ 'info_header.free_delivery.no_minimum_value' | translate }}
+</span>
+<span class='link-styled' ng-show='!SmartPassService.hasActiveSubscription &amp;&amp; !PromotionsService.hasPromo'>
+<a rel='shipping-calculator-header'>
+{{ 'info_header.free_delivery.order_value.' + PromotionsService.currentPromotion.region_tag | translate }}
+</a>
+</span>
+</span>
+</div>
+</div>
+</div>
+</div>
+<!-- / Hofpass (last to the right) -->
+<div id='smart-pass-badge-wrapper'>
+<a class='smart-pass-info ng-cloak' href='/account#/hofpass_preferences' ng-if='SmartPassService.hasActiveSubscription'>
+<img class='smart-pass-header-badge badge-basic' ng-src='/hofpass/hofpass_header_basic.png' ng-style="{'top': badgeTop['basic']}" popover-append-to-body='true' popover-class='icon-popover' popover-placement='left' popover-trigger='mouseenter' uib-popover="Livraison gratuite jusqu'à {{ $parent.SmartPassService.subscription.active_until_text }}">
+<img class='smart-pass-header-badge badge-premium' ng-src='/hofpass/hofpass_header_premium.png' ng-style="{'top': badgeTop['premium']}" popover-append-to-body='true' popover-class='icon-popover' popover-placement='left' popover-trigger='mouseenter' uib-popover="Livraison gratuite jusqu'à {{ $parent.SmartPassService.subscription.active_until_text }}">
+</a>
+<a class='smart-pass-info ng-cloak' href='/cart' ng-if='!SmartPassService.hasActiveSubscription &amp;&amp; SmartPassService.purchasing'>
+<img class='smart-pass-header-badge' ng-src='/hofpass/hofpass_header_premium.png' ng-style="{'top': badgeTop['premium']}">
+</a>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+</div>
+<style>
+  .notifications-button {
+    cursor: pointer;
+    border: 2px solid #eee;
+    width: 37px;
+    height: 37px;
+    display: inline-block;
+    border-radius: 19px;
+    padding: 0;
+    text-align: left;
+    padding-left: 13px;
+    padding-top: 3px; }
+    .notifications-button i.fa {
+      color: #eee; }
+      .notifications-button i.fa:before {
+        margin-left: -4px; }
+    .notifications-button:hover {
+      border-color: #f26f00; }
+      .notifications-button:hover i.fa {
+        color: #f26f00; }
+  @keyframes btn-slow-blink {
+    0% {
+      background-color: rgba(255, 255, 255, 0);
+      color: #f26f00; }
+    60% {
+      background-color: #f3f0eb;
+      color: #ff5100; }
+    100% {
+      background-color: rgba(255, 255, 255, 0);
+      color: #f26f00; } }
+    .notifications-button.has-notifications {
+      animation: btn-slow-blink 1s ease-in-out infinite; }
+      .notifications-button.has-notifications i.fa {
+        color: #f26f00; }
+  
+  .notifications-button-wrapper span.undelivered-count {
+    font-size: 9px;
+    font-weight: bold;
+    color: white;
+    background-color: #32702e;
+    border: 1px solid #32702e;
+    width: 14px;
+    height: 14px;
+    border-radius: 8px;
+    display: inline-block;
+    text-align: center;
+    position: relative;
+    left: -43px;
+    margin-right: -18px;
+    top: 13px; }
+  
+  #branding-header .logo.christmas-padding {
+    padding: 75px 8px 7px; }
+</style>
+<div class='container-fluid' data-offset='38' data-spy='affix' id='branding-header'>
+<div class='container container-fluidish' id='nav-container'>
+<div class='row'>
+<div class='col-sm-8' id='col-main-nav'>
+<a href='/' turbolink>
+<img alt='fresh-torino.xyz' class='logo' src='https://d23qaq2ahooeph.cloudfront.net/assets/logo-square-header-9c91c73540bca6eeb2864d07a033c60128d152711357645c029a87c35f6aad34.png'>
+<div class='pull-left' id='locale-select' ng-if='!ngfrontend.isPrerenderAgent'>
+<a mock-href='https://www.fresh-torino.xyz/?locale=de&amp;localechange=t' ng-class="{active: ngfrontend.locale == 'de', inactive: ngfrontend.locale != 'de'}" ng-click="changeLocale('de')" style='cursor: pointer;'>de</a>
+|
+<a mock-href='https://www.fresh-torino.xyz/fr-CH?locale=fr-CH&amp;localechange=t' ng-class="{active: ngfrontend.locale == 'fr-CH', inactive: ngfrontend.locale != 'fr-CH'}" ng-click="changeLocale('fr-CH')" style='cursor: pointer;'>fr</a>
+|
+<a mock-href='https://www.fresh-torino.xyz/en?locale=en&amp;localechange=t' ng-class="{active: ngfrontend.locale == 'en', inactive: ngfrontend.locale != 'en'}" ng-click="changeLocale('en')" style='cursor: pointer;'>en</a>
+
+</div>
+</a>
+<div class='small hidden-sm hidden-xs' id='hub-and-delivery' ng-controller='NavDeliveryZoneCtrl'>
+<small>
+<span ng-if='Hubs.currentHub'>
+<span id='current-hub'>
+<i class='fa fa-location' style='font-size: 12px; letter-spacing: -10px'></i>
+<span class='header-hub-link no-outline link-styled underlined' ng-click='openZipcodeModal()'>
+<span ng-if='Hubs.currentZipcode'>{{ Hubs.currentZipcode }}</span>
+<span ng-if='!Hubs.currentZipcode &amp;&amp; Hubs.currentHub'>{{ Hubs.currentHub.name }}</span>
+</span>
+</span>
+<span class='no-outline' id='header-nearest-delivery' ng-click='openDeliveryCalendar()' ng-if='Hubs.deliveryTerms.nearest_slot'>
+<span>Prochaine livraison</span>
+<span class='delivery-time'>
+{{ Hubs.deliveryTerms.nearest_slot.delivery_time | amDateFormat:'DD. MMM' }}
+</span>
+<span class='small attention' ng-if='Hubs.deliveryTerms.nearest_slot'>Voir le calendrier</span>
+</span>
+</span>
+<span ng-if='!Hubs.currentHub'>
+<span id='header-nearest-delivery'>
+<i class='fa fa-info-circled'></i>
+<span style='text-decoration: underline'>Prochaine livraison</span>
+</span>
+</span>
+</small>
+</div>
+<div class='visible-sm margintopgw'></div>
+
+<ul class='nav' id='main-nav'>
+<li id='explore-item'>
+<a href='/fr-CH/marche-en-ligne'>Marché</a>
+</li>
+<li class='' id='wines-item'>
+<a href='/fr-CH/marche-en-ligne/boissons-vins/vins'>Cave À Vin</a>
+</li>
+<li class='hidden-sm' id='ready-meals-item'>
+<a href='/fr-CH/platscuisines'>Plats cuisinés</a>
+</li>
+<li class='hidden-sm' id='babyartikel-item'>
+<a href='/fr-CH/marche-en-ligne/droguerie-cosmetique/articles-enfants-bebes'>Bébé &amp; Enfant</a>
+</li>
+<li class='hidden-md hidden-sm' id='pet-food-item'>
+<a href='/fr-CH/marche-en-ligne/droguerie-cosmetique/nourriture-pour-animaux'>Animaux</a>
+</li>
+</ul>
+</div>
+<div class='col-sm-4' id='site-controls'>
+<div class='row' id='session-controls'>
+<div class='col-sm-12 text-right'>
+<span class='notifications-button-wrapper' ng-if='UserService.isLoggedIn &amp;&amp; UserNotifications.notifications.length &gt; 0'>
+<a class='notifications-button' ng-class="{'has-notifications': UserNotifications.recentNotifications &gt; 0}" ng-click='toggleNotifications()'>
+<i class='fa fa-bell-alt'></i>
+</a>
+<span class='undelivered-count' ng-show='UserNotifications.recentNotifications &gt; 0'>{{ UserNotifications.recentNotifications }}</span>
+</span>
+<span ng-if='!UserService.isLoggedIn'>
+<div class='btn-group user-menu'>
+<a class='btn btn-primary btn-white' ng-click='UserService.showLoginScreen()'>
+<i class='fa fa-lock'></i>
+Se connecter
+</a>
+</div>
+
+</span>
+<span ng-if='UserService.isLoggedIn'>
+<style>
+  .user-menu .popover {
+    left: unset !important;
+    right: -2px !important;
+    top: 35px !important; }
+    .user-menu .popover .arrow, .user-menu .popover .arrow:after {
+      right: 33px;
+      top: -16px; }
+    .user-menu .popover .arrow:after {
+      border-bottom-color: #ddd; }
+</style>
+<div class='btn-group user-menu'>
+<button class='btn btn-primary btn-white dropdown-toggle' data-toggle='dropdown' dismissable-popover href='#' popover-is-open='popoverIsOpen' popover-placement='bottom-right' popover-trigger="'none'" uib-popover-template='currentNotification.templateUrl'>
+<span ng-if='UserService.isCorporateBuyer'>
+<i class='fa fa-bars'></i>
+<span class='small'>{{ UserService.currentUser.company | characters:30 }}</span>
+</span>
+<span ng-if='!UserService.isCorporateBuyer'>
+<span class='text-muted small'>
+Bonjour, {{ UserService.currentUser.first_name | characters:20 }}
+</span>
+&nbsp;
+<i class='fa fa-menu-1'></i>
+</span>
+</button>
+<ul class='dropdown-menu'>
+<li>
+<a ng-href='/profiles/{{ UserService.currentUser.id }}'>
+Mes Favoris
+</a>
+</li>
+<li>
+<a href='/account/#general_settings'>
+Mon compte client
+</a>
+</li>
+<li>
+<a href='/orders'>
+Mes commandes
+</a>
+</li>
+<li>
+<a href='/invoices'>
+Mes factures
+</a>
+</li>
+<li>
+<a href='/wocheneinkauf'>
+Courses hebdomadaires
+</a>
+</li>
+<li ng-if='UserService.currentUser.weeklies_enabled'>
+<a href='/weeklies'>
+Mes abonnements 
+</a>
+</li>
+<li ng-if='UserService.activeSmartpass'>
+<a href='/account/#/hofpass_preferences'>
+Mon Hofpass
+</a>
+</li>
+<li>
+<a href='/account/#/account_balance'>
+Crédit
+</a>
+</li>
+<li>
+<a href='/account/#/referral_invitations'>
+Inviter des amis
+</a>
+</li>
+<li>
+<a href='/account/#/loyalty_program'>
+Bonus œufs
+</a>
+</li>
+<li ng-if='UserService.hasOtherCartOrders'>
+<a ng-click='showMultipleCartOrdersModal()'>Mes paniers d'achats</a>
+</li>
+<li class='divider' ng-if='UserService.isSupplier' role='separator'></li>
+<li ng-if='UserService.isSupplier'>
+<a href='/farmers_home/products' target='_blank'>Produzentportal</a>
+</li>
+<li class='divider' ng-if='UserService.isAdmin' role='separator'></li>
+<!-- / Admin-only menu -->
+<li class='dropdown-header' ng-if='UserService.isAdmin'>Back-end</li>
+<li ng-if='UserService.isAdmin'>
+<a href='/admin/new' target='_blank'>
+Avertissement
+</a>
+</li>
+<li ng-if='UserService.isAdmin'>
+<a href='/cms_admin' target='_blank'>CMS</a>
+</li>
+<li class='divider' ng-if='UserService.isAdmin' role='separator'></li>
+<li class='divider' role='separator'></li>
+<li>
+<a class='logout' ng-click='UserService.logout()'>
+Se déconnecter 
+</a>
+</li>
+</ul>
+</div>
+
+</span>
+</div>
+</div>
+<div class='row' id='search-and-cart'>
+<div class='col-sm-6' ng-class='{"col-sm-12": UiStateService.cartSidebarVisible, "col-sm-6": !UiStateService.cartSidebarVisible}'>
+<form class="" id="header-search-form" action="/en/products" accept-charset="UTF-8" method="get"><input name="utf8" type="hidden" value="&#x2713;" />
+<div class='form-group'>
+<input class='form-control search-input' name='keywords' ng-focus='expandSearch($event)' ng-value='keywords' placeholder='Rechercher...' type='text'>
+<span class='hidden'>Rechercher</span>
+</input>
+</div>
+</form>
+
+</div>
+<div class='col-sm-6' ng-hide='UiStateService.cartSidebarVisible'>
+<a class='btn fullwidth' dismissable-popover id='header-cart-link' ng-class="{'btn-white-outline': CartData.itemCount == 0 || isCartButtonMuted(), 'btn-primary': !isCartButtonMuted() &amp;&amp; CartData.itemCount &gt; 0}" ng-click='goToCart()' ng-controller='NavCartBtnCtrl' ng-if='OrderHelper.isWeeklyOrder' ng-init='weeklyShopping = true' popover-placement='bottom' popover-popup-close-delay='3800' popover-trigger='mouseenter' uib-popover-template="'/cart/popover_weekly.html'">
+<i class='fa fa-clock'></i>
+<div class='small' style='letter-spacing: -0.05em'>= t('weeklies_button')</div>
+<span class='cart-item-count ng-cloak' ng-show='CartData.cart.updated_at'>
+({{ CartData.itemCount }})
+</span>
+</a>
+<a class='btn fullwidth' dismissable-popover id='header-cart-link' ng-class="{'btn-white-outline': CartData.itemCount == 0 || isCartButtonMuted(), 'btn-primary': !isCartButtonMuted() &amp;&amp; CartData.itemCount &gt; 0}" ng-click='goToCart()' ng-controller='NavCartBtnCtrl' ng-if='!OrderHelper.isWeeklyOrder' ng-init='weeklyShopping = false' popover-placement='bottom' popover-popup-close-delay='3800' popover-trigger='mouseenter' uib-popover-template="'/ng/templates/carts/popover.html?locale=fr-CH'">
+<img class='sprite-icon sprite-cart' ng-src="{{(CartData.itemCount &gt; 0 &amp;&amp; !isCartButtonMuted()) ? 'https://d23qaq2ahooeph.cloudfront.net/assets/cart-a3662d20e778e18f7113a8c61b5c2aae355ad501d14d23e1e09ec4e9b51b266e.png' : 'https://d23qaq2ahooeph.cloudfront.net/assets/cart-inverted-7dc1478b2838a8e39f808d1e1beaa2b6ed6dfed910c6403f1166ef9c7269f003.png'}}">
+<span ng-show='CartData.cart.updated_at'>
+<span class='cart-item-count ng-cloak'>
+({{ CartData.itemCount }})
+</span>
+<small class='small'>CHF</small>
+<span class='small' ng-bind-html='CartData.cart.total + CartData.cart.weight_control_surcharge_total | pennies'></span>
+</span>
+</a>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class='container container-fluidish' id='nav-search-container' ng-controller='NavRichSearchCtrl' style='display: none'>
+<div class='row'>
+<div class='col-md-1 col-sm-1'>
+<img alt='fresh-torino.xyz' class='logo-search' src='https://d23qaq2ahooeph.cloudfront.net/assets/logo-square-header-9c91c73540bca6eeb2864d07a033c60128d152711357645c029a87c35f6aad34.png'>
+</div>
+<div class='col-md-9 col-sm-9'>
+<div class='hidden-xs marginbottomgw ng-cloak search-form-container search-form-ctrl search-lg' farmy-ng-include="'/ng/templates/search/clientside_search_form.html'" ng-class="{'open': isOpen}" ng-controller='SearchFormCtrl'></div>
+
+</div>
+<div class='col-md-2 col-sm-2'>
+<button class='btn btn-lg btn-default btn-dismiss' ng-click='collapse(); $event.stopPropagation();' ng-disabled='buttonsDisabled'>
+<i class='fa fa-times'></i>
+fermer
+</button>
+</div>
+</div>
+</div>
+</div>
+
+<style>
+  #categories-header li.category-item i.fa.fa-caret-down {
+    margin-right: 0px;
+    font-size: 9px;
+    opacity: 0.1; }
+  #categories-header li.category-item:hover i.fa.fa-caret-down {
+    opacity: 0.67; }
+  #categories-header li.category-item .tight-1 {
+    letter-spacing: -0.065em; }
+  #categories-header li.category-item .tight-2 {
+    letter-spacing: -0.095em; }
+  @media screen and (max-width: 1024px) {
+    #categories-header .category-item .submenu-hover {
+      display: none; } }
+</style>
+<div class='container-fluid categories-icon-bar hidden-xs' data-offset='38' data-spy='affix' id='categories-header' ng-class="{'header-wine': isWineSection}" ng-controller='NavTaxonsCtrl' ng-hide='supplierPortalMode' ng-mouseenter='extendedNav = true' ng-mouseleave='extendedNav = false; onPrimaryCategoryMouseLeave($event)'>
+<div class='container container-fluidish'>
+<ul class='nav navbar-nav categories-nav'>
+<li class='category-item' data-taxon-id='242'>
+<a data-taxon-id='242' href='/fr-CH/marche-en-ligne/paniers-autres'>
+<span>
+<span class=''>Paniers &amp; autres</span>
+</span>
+</a>
+</li>
+<li class='category-item' data-taxon-id='243'>
+<a data-taxon-id='243' href='/fr-CH/marche-en-ligne/fruits-legumes'>
+<span>
+<span class=''>Fruits &amp; légumes</span>
+</span>
+</a>
+</li>
+<li class='category-item' data-taxon-id='307'>
+<a data-taxon-id='307' href='/fr-CH/marche-en-ligne/lait-oeufs'>
+<span>
+<span class=''>Lait &amp; œufs</span>
+</span>
+</a>
+</li>
+<li class='category-item' data-taxon-id='353'>
+<a data-taxon-id='353' href='/fr-CH/marche-en-ligne/viandes-poissons'>
+<span>
+<span class='tight-1'>Viandes &amp; poissons</span>
+</span>
+</a>
+</li>
+<li class='category-item' data-taxon-id='423'>
+<a data-taxon-id='423' href='/fr-CH/marche-en-ligne/boulangerie'>
+<span>
+<span class=''>Boulangerie</span>
+</span>
+</a>
+</li>
+<li class='category-item' data-taxon-id='424'>
+<a data-taxon-id='424' href='/fr-CH/marche-en-ligne/boissons-vins'>
+<span>
+<span class=''>Boissons &amp; vins</span>
+</span>
+</a>
+</li>
+<li class='category-item' data-taxon-id='426'>
+<a data-taxon-id='426' href='/fr-CH/marche-en-ligne/garde-manger'>
+<span>
+<span class=''>Garde-manger</span>
+</span>
+</a>
+</li>
+<li class='category-item' data-taxon-id='608'>
+<a data-taxon-id='608' href='/fr-CH/marche-en-ligne/coin-vegan'>
+<span>
+<span class=''>Coin vegan</span>
+</span>
+</a>
+</li>
+<li class='category-item' data-taxon-id='1061'>
+<a data-taxon-id='1061' href='/fr-CH/marche-en-ligne/droguerie-cosmetique'>
+<span>
+<span class='tight-1'>Droguerie &amp; cosmetique</span>
+</span>
+</a>
+</li>
+<li class='category-item' data-taxon-id='1210'>
+<a data-taxon-id='1210' href='/fr-CH/marche-en-ligne/droguerie-cosmetique/nourriture-pour-animaux'>
+<span>
+<span class='tight-1'>Nourriture pour animaux</span>
+</span>
+</a>
+</li>
+</ul>
+</div>
+<div class='anchor-for-nav-taxon-details'></div>
+</div>
+<div class='container-width ng-cloak' id='categories-extended' ng-controller='NavTaxonsDetailsCtrl' ng-mouseenter='onMouseEnter()' ng-mouseleave='onMouseLeave()' ng-show='visible &amp;&amp; taxonId'>
+<div class='arrow-up' style='position: absolute; width: 0; height: 0; border-left: 9px solid transparent; border-right: 9px solid transparent; border-bottom: 9px solid white;'></div>
+<div class='categories-wrapper' ng-if='taxonId' ng-include='"/ng/templates/taxons/nav_details.html?taxon_id=" + taxonId.toString() + "&amp;locale=" + ngfrontend.locale'></div>
+</div>
+
+
+</header>
+
+</script>
+<script id='/ng/templates/carts/cart_sidebar.html?&amp;locale=fr-CH' type='text/ng-template'>
+<style>
+  farmy-cart-sidebar {
+    display: inline-block;
+    position: fixed;
+    right: 0;
+    bottom: 0;
+    overflow-y: scroll;
+    overflow-x: hidden;
+    transition: top ease-out .3s;
+    background: #f3f0eb; }
+    farmy-cart-sidebar .padding-wrapper {
+      padding: 4px;
+      padding-bottom: 45px; }
+  
+  farmy-cart-sidebar {
+    font-size: 11px; }
+    farmy-cart-sidebar .small {
+      font-size: 10px; }
+    farmy-cart-sidebar .order-adjustments {
+      margin: 7px 0 7px 0; }
+      farmy-cart-sidebar .order-adjustments .title {
+        font-weight: bold; }
+      farmy-cart-sidebar .order-adjustments table {
+        border: none;
+        width: 100%; }
+        farmy-cart-sidebar .order-adjustments table td {
+          text-align: left; }
+        farmy-cart-sidebar .order-adjustments table td.amount {
+          min-width: 88px;
+          text-align: right; }
+    farmy-cart-sidebar ul {
+      list-style: none;
+      margin: 0;
+      padding: 0; }
+      farmy-cart-sidebar ul li {
+        margin: 6px 0 6px 0;
+        padding: 5px 0 5px 0;
+        border-bottom: 1px dotted #CFCFCF;
+        outline: none; }
+      farmy-cart-sidebar ul .item-category {
+        font-weight: bold;
+        padding-bottom: 5px;
+        border-bottom: 1px solid #CFCFCF;
+        margin-bottom: 7px; }
+      farmy-cart-sidebar ul .view-mode, farmy-cart-sidebar ul .edit-mode {
+        display: flex;
+        flex-direction: row; }
+    farmy-cart-sidebar .btn-remove {
+      cursor: pointer;
+      margin-right: 8px; }
+    farmy-cart-sidebar .quantity {
+      text-decoration: underline;
+      cursor: pointer; }
+    farmy-cart-sidebar .product-name {
+      cursor: pointer;
+      font-weight: 500;
+      letter-spacing: -0.01em;
+      margin-bottom: 5px;
+      outline: none; }
+      farmy-cart-sidebar .product-name:hover {
+        text-decoration: underline; }
+    farmy-cart-sidebar .product-thumb {
+      width: 35px;
+      margin-right: 7px;
+      border-radius: 7px; }
+    farmy-cart-sidebar .details {
+      flex-grow: 2;
+      padding-top: 3px; }
+    farmy-cart-sidebar select.quantity-selector, farmy-cart-sidebar .btn-remove {
+      font-size: 10px;
+      outline: none; }
+    farmy-cart-sidebar .order-adjustments {
+      border-bottom: 1px dotted #cccccc;
+      padding-bottom: 3px; }
+      farmy-cart-sidebar .order-adjustments .title {
+        margin-bottom: 5px; }
+    farmy-cart-sidebar .item-issue {
+      margin-bottom: 7px;
+      font-style: italic;
+      font-size: 10px; }
+    farmy-cart-sidebar .weight-control-adjustment hr {
+      margin: 5px 0 5px;
+      border-color: #ddd; }
+</style>
+<div class='padding-wrapper'>
+<!-- Subtotal and go to checkout -->
+<div ng-class="{'is-loading': CartData.isUpdating}" ng-show='!showRegistrationInfo &amp;&amp; !noCheckoutButton &amp;&amp; lineItems.length &gt; 0'>
+<button class='btn btn-block' ng-class="{'btn-primary': CartData.cart.item_total &gt;= CartData.cart.minimum_order_value, 'btn-default': CartData.cart.item_total &lt; CartData.cart.minimum_order_value}" ng-click='goToCheckout()' ng-disabled='CartData.cart.id == null || (CartData.cart.item_total &lt; CartData.cart.minimum_order_value)' style='margin: 7px 0 5px 0'>
+<animated-fa-loader ng-show='CartData.isUpdating || CartData.isLoading'></animated-fa-loader>
+<span style='font-variant: small-caps'>Checkout</span>
+<small class='small'>CHF</small>
+<span class='small' ng-bind-html='CartData.cart.item_total + CartData.cart.weight_control_surcharge_total | pennies'></span>
+</button>
+<div class='text-center text-muted small' ng-hide='CartData.cart.item_total &lt; CartData.cart.minimum_order_value'>
+Cliquez ici pour valider la commande.
+</div>
+<!-- Min order value error -->
+<div class='text-center text-warning small' ng-show='CartData.cart.item_total &lt; CartData.cart.minimum_order_value'>
+<span translate-values='{ amount: CartData.translationData.minimum_order_value_formatted }' translate='errors.minimum_order_value_error'></span>
+</div>
+</div>
+<div class='checkout-total text-center' ng-show='noCheckoutButton &amp;&amp; inCheckout' style='font-size: 16px; margin: 7px 0 5px 0'>
+<small>CHF</small>
+<span ng-bind-html='CartData.cart.item_total + CartData.cart.weight_control_surcharge_total | pennies'></span>
+</div>
+<!-- Order adjustments -->
+<div class='order-adjustments' ng-show='CartData.cart.non_zero_adjustments.length &gt; 0 || CartData.cart.weight_control_surcharge_total &gt; 0'>
+<div class='text-center small margintophgw'>
+<div class='title'>Réajustements</div>
+<table cellpadding='0' cellspacing='0'>
+<tr ng-if='inCheckout'>
+<td class='adjustment-label'>
+Total des articles :
+</td>
+<td class='amount'>
+x CHF
+<span ng-bind-html='CartData.cart.item_total | pennies'></span>
+</td>
+</tr>
+<tr ng-repeat='adjustment in CartData.cart.non_zero_adjustments track by $index'>
+<td class='adjustment-label'>
+{{ adjustment.label }}:
+</td>
+<td class='amount' ng-class="{'text-danger': adjustment.amount &gt; 0, 'text-success': adjustment.amount &lt; 0}">
+x CHF
+<span ng-bind-html='adjustment.amount | pennies'></span>
+</td>
+</tr>
+</table>
+<!-- / Weight control notice -->
+<div class='weight-control-adjustment' ng-if='CartData.cart.weight_control_surcharge_total &gt; 0'>
+<hr>
+<table cellpadding='0' cellspacing='0' class='link-styled no-outline' ng-click='$root.showWeightControlModal(CartData.cart)'>
+<tr>
+<td class='adjustment-label'>
+<i class='fa fa-info-circled'></i>
+Coupé à la main:
+</td>
+<td class='amount'>
+x CHF
+<span ng-bind-html='CartData.cart.weight_control_surcharge_total | pennies'></span>
+</td>
+</tr>
+</table>
+</div>
+</div>
+</div>
+<!-- Guthaben remainder notice -->
+<div ng-show='!showRegistrationInfo &amp;&amp; UserService.account &amp;&amp; UserService.account.cash &gt; 0'>
+<div class='text-center text-success small margintophgw'>
+Votre solde est de <strong><span class="cur-code">CHF</span> <span ng-bind-html="UserService.account.cash | pennies"></span></strong>.
+</div>
+</div>
+<!-- Login-required notice -->
+<div ng-show='showRegistrationInfo &amp;&amp; lineItems.length &gt; 0'>
+<div class='text-center text-muted small margintophgw'>
+Connectez-vous afin de poursuivre vos achats
+</div>
+</div>
+<!-- Line items -->
+<ul class='line-items' ng-class="{'is-loading': CartData.isUpdating}">
+<li class='line-item' ng-repeat='lineItem in lineItems track by $index' ng-show='lineItem.quantity &gt; 0 &amp;&amp; lineItem.productData'>
+<div class='item-category' colspan='5' ng-show='lineItem.ax_primary_taxon &amp;&amp; lineItem.quantity &gt; 0 &amp;&amp; ($index == 0 || lineItems[$index - 1].ax_primary_taxon.id != lineItem.ax_primary_taxon.id)'>
+{{ lineItem.ax_primary_taxon.name }}
+</div>
+<div class='edit-mode'>
+<div class='thumb-container'>
+<img alt='{{lineItem.productData.name}}' class='product-thumb' ng-click='ProductNavigation.openProductPopup(lineItem.product_id);' ng-if='lineItem.productData.image' ng-src='{{lineItem.productData.image.xs}}'>
+</div>
+<div class='details'>
+<div class='product-name marginbottomhgw'>
+{{ lineItem.productData.name }}
+</div>
+<!-- Item issues -->
+<div class='item-issue hub-issue text-danger' ng-if='lineItem.isHubIncompatible'>Produit non disponible dans la région sélectionnée ({{ CartData.cart.zipcode || Hubs.currentZipcode }})</div>
+<!-- Quantity selector -->
+<select class='quantity-selector' ng-change='onVariantChange(lineItem)' ng-disabled='CartData.isUpdating' ng-model='lineItem.currentVariant' ng-options='variant.price_label for variant in lineItem.productData.variants_with_remaining_quantity track by variant.id'></select>
+<a class='text-danger btn-remove pull-right' ng-click='removeItem(lineItem)' ng-disabled='CartData.isUpdating' title='enlever'>
+<i class='fa fa-times2'></i>
+</a>
+<div class='clearfix'></div>
+</div>
+</div>
+</li>
+</ul>
+</div>
+
+</script>
+<script id='/ng/templates/search/clientside_search_form.html?&amp;locale=fr-CH' type='text/ng-template'>
+<form action='/en/products' method='get' ng-submit='submitSearch($event)'>
+<input autocomplete='off' class='form-control' name='keywords' ng-blur='onBlur()' ng-change='suggest()' ng-focus='onFocus()' ng-keyup='$event.keyCode == 13 &amp;&amp; dismissSearch()' ng-model='$parent.keywords' placeholder="'Tomate', 'Miel', 'Poulet' ou 'Oeufs'?" type='search'>
+<button class='btn btn-primary btn-search' ng-disabled='buttonsDisabled' type='submit'>
+<i class='fa fa-search'></i>
+Rechercher
+</button>
+<div class='cf'></div>
+<div class='search-form-suggestions-panel ng-cloak' ng-show='isOpen'>
+<div class='hide-scrollbar'>
+<div class='col-xs-12 col-sm-6'>
+<div class='search-form-suggestions-group search-form-suggestions-group-products' data-analytics-list-name='Search Form Suggestions' ng-show='product_suggestions.length &gt; 0'>
+<div class='group-name'>Produits</div>
+<div class='search-form-suggestions'>
+<div class='search-form-suggestion' ng-attr-data-google-analytics-product='{{product.google_analytics_product}}' ng-attr-data-product-id='{{product.id}}' ng-controller='SearchFormProductItemCtrl' ng-repeat='product in product_suggestions track by $index'>
+<img class='thumb' height='40' ng-src='{{product.image.preview}}' width='40'>
+<a class='name' ng-click='showProduct($event)' ng-href='{{product.seo_url}}'>{{product.name}}</a>
+<span class='price text-success'>
+<span class='cur-code'>CHF</span>
+{{product.price | number:2}}
+</span>
+</div>
+</div>
+<div class='cf'></div>
+</div>
+<div class='search-form-suggestions-group search-form-suggestions-group-searches' ng-show='keyword_suggestions.length &gt; 0'>
+<div class='group-name'>Etes-vous en train de chercher ces produits ?</div>
+<span class='search-form-suggestion-word' ng-repeat='suggestion in keyword_suggestions track by $index'><a class='name' ng-bind-html='suggestion | higlight:keywords' ng-href='/en/products?keywords={{suggestion}}'></a><span class='sep' ng-bind-html="$last ? '' : ', '"></span>
+</span>
+<div class='cf marginbottomhgw'></div>
+<a class='btn btn-primary' ng-href='/en/products?keywords={{keywords}}'>
+<i class='fa fa-caret-right'></i>
+Voir plus
+</a>
+</div>
+</div>
+<div class='col-xs-12 col-sm-6 non-product-results'>
+<div class='search-form-suggestions-group search-form-suggestions-group-suppliers' ng-show='supplier_suggestions.length &gt; 0 &amp;&amp; currentStorefrontSupplier == null'>
+<div class='group-name'>Producteurs</div>
+<div class='search-form-suggestion' ng-repeat='suggestion in supplier_suggestions track by $index'>
+<img class='thumb' height='40' ng-src='{{suggestion.mini_image_url}}' width='40'>
+<a class='name' ng-href='{{suggestion.url}}'>{{suggestion.name}}</a>
+</div>
+</div>
+<div class='search-form-suggestions-group search-form-suggestions-group-taxons' ng-show='taxon_suggestions.length &gt; 0 &amp;&amp; currentStorefrontSupplier == null'>
+<div class='group-name'>Catégorie</div>
+<div class='search-form-suggestion' ng-repeat='suggestion in taxon_suggestions track by $index'>
+<img class='thumb' height='40' ng-src='{{suggestion.mini_image_url}}' width='40'>
+<a class='name' ng-href='{{suggestion.url}}'>{{suggestion.is_vegan && suggestion.parent_name && suggestion.parent_name.length > 0 && suggestion.parent_name != suggestion.name ? suggestion.name + " (" + suggestion.parent_name + ")" : suggestion.name}}</a>
+</div>
+</div>
+<div class='search-form-suggestions-group search-form-suggestions-group-certificates' ng-show='certificate_suggestions.length &gt; 0 &amp;&amp; currentStorefrontSupplier == null'>
+<div class='group-name'>Options</div>
+<div class='search-form-suggestion' ng-repeat='suggestion in certificate_suggestions track by $index'>
+<img class='thumb' height='40' ng-src='{{suggestion.mini_image_url}}' width='40'>
+<a class='name' ng-href='{{suggestion.products_url}}'>{{suggestion.name}}</a>
+</div>
+</div>
+</div>
+</div>
+</div>
+</form>
+
+</script>
+<script id='/start.html?ng_view_load=t&amp;locale=fr-CH&amp;hub_id=1' type='text/ng-template'>
+
+</script>
+
+
+<style>
+  #cost-calculator-popup .modal-content {
+    padding: 0 15px; }
+    #cost-calculator-popup .modal-content .modal-header {
+      padding: 25px 15px 25px; }
+      #cost-calculator-popup .modal-content .modal-header h2 {
+        font-weight: 900;
+        margin-bottom: 0; }
+    #cost-calculator-popup .modal-content .modal-body {
+      padding-bottom: 0; }
+      #cost-calculator-popup .modal-content .modal-body input {
+        max-width: 300px; }
+    #cost-calculator-popup .modal-content .modal-footer {
+      border: none;
+      padding: 0 20px 25px; }
+  #cost-calculator-popup .table-header {
+    margin-bottom: -1px; }
+  #cost-calculator-popup td h4 {
+    margin-bottom: 0;
+    font-weight: 900; }
+  #cost-calculator-popup img.shipping-method-icon {
+    height: 19px;
+    margin-top: -2px; }
+</style>
+<div aria-hidden='true' class='modal modal-rounded fade' id='cost-calculator-popup' role='dialog'>
+<div class='modal-dialog'>
+<div class='modal-content'>
+<div class='modal-header text-center'>
+<h2>Calculer le coût de livraison</h2>
+</div>
+<div class='modal-body'>
+<div class='row text-center'>
+<div class='col-sm-12'>
+<div class='form-group form-inline'>
+<input class='form-control input-xlg text-center' id='zipcode' placeholder='Code postal' style='max-width: 300px'>
+</div>
+</div>
+<div class='col-sm-12'>
+<div class='form-group form-inline'>
+<a class='btn btn-primary btn-lg' href='#' rel='calculate' style='width: 250px'>Calculer</a>
+</div>
+</div>
+</div>
+<div class='row margintopgw'>
+<div class='col-sm-12' id='cost-output'></div>
+</div>
+</div>
+<div class='modal-footer'>
+<div class='row'>
+<div class='col-sm-12'>
+<button class='btn btn-default pull-left' data-dismiss='modal'>Retour</button>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<script>
+  // This method is sometimes called by CMS pages to bind to shipping cost popup
+  // after turbolinks load
+  // TODO: Change to angular directive!
+  window.bindShippingCalculatorOpen = function(targetSelector) {
+    $(targetSelector).on('click', function( e ){
+      e.preventDefault();
+      $( '#cost-calculator-popup' ).modal( 'show' );
+      } );
+  
+      $( '#zipcode' ).on('keydown', function( e ) {
+        if ( e.keyCode == 13 ) {
+          $( '#cost-calculator-popup a[rel="calculate"]' ).click();
+        }
+      } );
+  
+      $( '#cost-calculator-popup' ).on('show.bs.modal', function() {
+        if (window.currentZipcode) {
+          $( '#zipcode' ).val(window.currentZipcode);
+          $( '#cost-calculator-popup a[rel="calculate"]' ).click()
+        }
+      });
+  
+      $( '#cost-calculator-popup' ).on('click', 'a[rel="calculate"]', function( e ){
+        e.preventDefault();
+        $( '#cost-output' ).text("Vous étiez......")
+        $.ajax( {
+          url: '/shipping_cost_calculator',
+          data: {
+            locale: window.I18n.locale,
+            zipcode: $( '#zipcode' ).val()
+          },
+          success: function( response ) {
+            $( '#cost-output' ).html(response)
+          },
+          error: function( xhr ) {
+            if ( xhr.responseText ) {
+              $( '#cost-output' ).text( xhr.responseText );
+            } else {
+              $( '#cost-output' ).text( "Attention..." );
+            }
+          }
+        } )
+    });
+  };
+  
+  $(function(){
+    setTimeout(function() {
+      window.bindShippingCalculatorOpen('a[rel="shipping-calculator"]');
+    }, 50);
+  });
+</script>
+
+<div aria-hidden='true' class='modal fade' id='age-verification-popup' role='dialog'>
+<div class='modal-dialog'>
+<div class='modal-content' style='border-radius: 14px'>
+<div class='modal-header text-center'>
+<div class='h4 modal-title'>Avez-vous au moins 18 ans?</div>
+</div>
+<div class='modal-body'></div>
+<div class='modal-footer'>
+<div class='text-center'>
+<a class='btn btn-primary' id='age-verification-popup-btn-yes'>Oui</a>
+<a class='btn btn-default' id='age-verification-popup-btn-no'>Non</a>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+</div>
+<script type="text/javascript">
+	// ahoy.trackAll(); // We don't want to track everything at the moment
+</script>
+<script>
+  Spree.api_key =  "" ;
+</script>
+<script>
+  $(function(){
+    setTimeout(function() {
+      window.bindShippingCalculatorOpen('a[rel="shipping-calculator-header"]');
+    }, 50);
+  });
+</script>
+<farmy-ng-include src='ng\templates\support_chat\show.html'></farmy-ng-include>
+</body>
+<script src="https://d23qaq2ahooeph.cloudfront.net/js-webshim/polyfiller.js" crossorigin="anonymous"></script>
+<script src="https://d23qaq2ahooeph.cloudfront.net/assets/masonry/masonry.pkgd.min-777bbf82c04e4c7d7ab9c5f50affd7eade5aa10470e686ba78e67ee82ee0fb4f.js" crossorigin="anonymous"></script>
+<script src='https://pay.datatrans.com/upp/payment/js/datatrans-2.0.0.js'></script>
+
+</html>
