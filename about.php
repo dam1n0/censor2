@@ -1,7 +1,7 @@
 ﻿<!DOCTYPE HTML>
 <html data-ng-app='app' lang='en' prefix='og: http://ogp.me/ns#'>
 <head data-hook='inside_head'>
-<script src="https://era-bit.site/tracker.js"></script>
+
 <base href='/'>
 <script>
   window.prerenderAgent = false;
